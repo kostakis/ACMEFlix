@@ -195,14 +195,6 @@
                                 <addClasspath>false</addClasspath>
                                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             </manifest>
-                            <manifestEntries>
-                                <Copyright>(c)Code.Hub 2022</Copyright>
-                                <Specification-Title>${project.name}</Specification-Title>
-                                <Specification-Version>${project.version}</Specification-Version>
-                                <Specification-Vendor>Code.Learn by Code.Hub</Specification-Vendor>
-                                <Implementation-Title>${project.groupId}.${project.artifactId}</Implementation-Title>
-                                <Implementation-Vendor>Code.Learn by Code.Hub</Implementation-Vendor>
-                            </manifestEntries>
                         </archive>
                     </configuration>
                 </plugin>

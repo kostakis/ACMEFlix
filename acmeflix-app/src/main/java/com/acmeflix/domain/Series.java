@@ -7,10 +7,11 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Movie extends BaseModel {
+public class Series extends BaseModel {
     private String name;
     private MovieCategory category;
     private Double duration;
     private Float rating;
+
 
 }
