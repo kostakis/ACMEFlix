@@ -13,5 +13,4 @@ public class Series extends BaseModel {
     private Double duration;
     private Float rating;
 
-
 }
