@@ -3,14 +3,38 @@ package com.acmeflix.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Setter
 @Getter
+@Entity
+@Table( name = "USERS", indexes =  {@Index(columnList = "email")})
 @NoArgsConstructor
-public class User extends BaseModel{
-    private String email;
+@ToString(callSuper = true)
+public class User extends BaseModel {
+
+    @NotNull( message = "Email can not be null")
+    @Column(length = 50, nullable = false, unique = true)
+    private String email; //This one will the user use to sign in
+
+    @NotNull ( message = "First name can not be null")
+    @Column(length = 50, nullable = false)
     private String firstName;
-    private String lastName;//
-    private String password;
+
+    @NotNull ( message = "First name can not be null")
+    @Column(length = 50, nullable = false)
+    private String lastName;
+
+    @NotNull ( message = "Last name can not be null")
+    @Column(length = 50, nullable = false)
+    private String password; //Just leave it simple, a plain text string also will stored to the DB
+
+    //Idk if this should be in the domain class
     static int maxProfiles = 4; //Each user may have up to 4 profiles
 }

@@ -19,7 +19,6 @@ public class Description {
 
     public void addCastMembers(String castMember) {
         castMembers.add(castMember);
-
     }
 
     public void setDescription(String description){

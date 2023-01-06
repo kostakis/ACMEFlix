@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.util.Pair;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,26 +13,29 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Getter
 @Entity
-@Table( name = "MOVIES", indexes = {@Index(columnList = "movieName")})
+@Table( name = "TVSHOWS", indexes = {@Index(columnList = "tvShowName")})
 @NoArgsConstructor
 @AllArgsConstructor
-public class Movie extends BaseModel {
+public class TvShow extends BaseModel {
 
-    @NotNull ( message = "Movie name can not be null")
-    @Column (length = 50, nullable = false)
-    private String movieName;
+    @NotNull
+    @Column(length = 50, nullable = false)
+    private String tvShowName;
 
-    //TODO CHECK THIS
-    @NotNull(message = "Movie category cannot be null")
+    @NotNull
+    @Column(nullable = false)
+    Pair<Integer, Integer> seasonEpisode;
+
+    @NotNull(message = "Tv show category cannot be null")
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
-    private Category category;
+    Category category;
 
     @NotNull(message = "Year can not be null")
     @Column(nullable = false)
     private Description description;
 
-    @NotNull(message = "Year can not be null")
+    @NotNull( message = "Tv show can not be null")
     @Column(nullable = false)
     private Integer year;
 

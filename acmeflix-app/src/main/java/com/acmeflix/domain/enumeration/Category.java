@@ -1,6 +1,7 @@
 package com.acmeflix.domain.enumeration;
+
 //Different movie categories
-public enum MovieCategory {
+public enum Category {
     ACTION,
     ANIMATION,
     COMEDY,
@@ -8,6 +9,5 @@ public enum MovieCategory {
     DRAMA,
     HORROR,
     ROMANCE,
-    SCIFI,
-
+    SCIFI
 }
