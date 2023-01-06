@@ -6,11 +6,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Main {
-    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+public class Acmeflix {
+    private static final Logger logger = LoggerFactory.getLogger(Acmeflix.class);
 
     public static void main(String[] args) {
-        SpringApplication.run(Main.class);
-        logger.info("main started");
+        SpringApplication.run(Acmeflix.class);
+        logger.info("Acmeflix app started");
     }
 }

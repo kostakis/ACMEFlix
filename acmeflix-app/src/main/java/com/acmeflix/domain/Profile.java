@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "PROFILES", indexes = {@Index(columnList = "user_id")})
 @NoArgsConstructor
 @AllArgsConstructor
-public class Profiles extends BaseModel {
+public class Profile extends BaseModel {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false) //Many profiles only one user
     private User user; //The user that owns this profile

@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: acmeflix application
+    name: Acmeflix application
   data:
     jpa:
       repositories:
