@@ -12,28 +12,29 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Getter
 @Entity
-@Table( name = "MOVIES", indexes = {@Index(columnList = "movieName")})
+@Table( name = "MOVIES", indexes = {@Index(columnList = "MOVIENAME")})
 @NoArgsConstructor
 @AllArgsConstructor
+@SequenceGenerator(name = "idGenerator", initialValue = 1, allocationSize = 1)
 public class Movie extends BaseModel {
 
     @NotNull ( message = "Movie name can not be null")
-    @Column (length = 50, nullable = false)
+    @Column (name = "MOVIENAME", length = 50, nullable = false)
     private String movieName;
 
-    //TODO CHECK THIS
     @NotNull(message = "Movie category cannot be null")
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
     private Category category;
 
-    @NotNull(message = "Year can not be null")
+    //Just a description string to make things more easier
+    @NotNull(message = "Description can not be null")
     @Column(nullable = false)
-    private Description description;
+    private String description;
 
-    @NotNull(message = "Year can not be null")
-    @Column(nullable = false)
-    private Integer year;
+    @NotNull
+    @Column (nullable = false)
+    private Integer movieYear;
 
     @NotNull
     @Column (nullable = false)

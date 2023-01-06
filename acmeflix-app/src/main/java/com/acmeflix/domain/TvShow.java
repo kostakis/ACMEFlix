@@ -13,31 +13,36 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Getter
 @Entity
-@Table( name = "TVSHOWS", indexes = {@Index(columnList = "tvShowName")})
+@Table( name = "TVSHOWS", indexes = {@Index(columnList = "TVSHOWNAME")})
 @NoArgsConstructor
 @AllArgsConstructor
+@SequenceGenerator(name = "idGenerator", initialValue = 1, allocationSize = 1)
 public class TvShow extends BaseModel {
 
     @NotNull
-    @Column(length = 50, nullable = false)
+    @Column(name = "TVSHOWNAME", length = 50, nullable = false)
     private String tvShowName;
 
     @NotNull
     @Column(nullable = false)
-    Pair<Integer, Integer> seasonEpisode;
+    private Integer season;
+
+    @NotNull
+    @Column(nullable = false)
+    private Integer episode;
 
     @NotNull(message = "Tv show category cannot be null")
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
-    Category category;
+    private Category category;
 
-    @NotNull(message = "Year can not be null")
+    @NotNull(message = "Description can not be null")
     @Column(nullable = false)
-    private Description description;
+    private String description;
 
     @NotNull( message = "Tv show can not be null")
     @Column(nullable = false)
-    private Integer year;
+    private Integer tvShowYear;
 
     @NotNull
     @Column (nullable = false)

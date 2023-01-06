@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -26,7 +28,11 @@ public class Profiles extends BaseModel {
     @Column
     private int viewedHours; //How many hours this profile has viewed content movies and series
 
-    //TODO
-//    @Column
-//    private String history;// Viewing history per profile
+    @ElementCollection
+    @Column
+    private List<Long> movieHistory = new ArrayList<>();
+
+    @ElementCollection
+    @Column
+    private List<Long> tvShowHistory = new ArrayList<>();
 }
