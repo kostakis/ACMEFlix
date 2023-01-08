@@ -28,7 +28,7 @@ public abstract  class BaseServiceImpl<T extends BaseModel>
 
     @Override
     public List<T> createAll(final List<T> categories) {
-        logger.trace("List<T> categories");
+        logger.trace("Create all with List<T> categories");
 
         final List<T> updatedEntities = new ArrayList<>();
 

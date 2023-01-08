@@ -17,10 +17,5 @@ public class Acmeflix {
     public static void main(String[] args) {
         SpringApplication.run(Acmeflix.class);
         logger.info("Acmeflix app started");
-//
-//        UserRepository userRepository = new UserRepository();
-//        UserServiceImplementation userService = new UserServiceImplementation();
-//
-//
     }
 }
