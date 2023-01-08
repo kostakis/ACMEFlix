@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: Acmeflix application
+  profiles:
+    active: my-dev
   data:
     jpa:
       repositories:

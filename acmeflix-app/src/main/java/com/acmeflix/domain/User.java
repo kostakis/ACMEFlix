@@ -1,9 +1,7 @@
 package com.acmeflix.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,11 +9,12 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-@Setter
-@Getter
+@Data
+@SuperBuilder
 @Entity
 @Table( name = "USERS", indexes =  {@Index(columnList = "email")})
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString(callSuper = true)
 public class User extends BaseModel {
 
