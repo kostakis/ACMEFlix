@@ -4,19 +4,19 @@ import java.util.List;
 
 public interface BaseService<T, ID> {
 
-    T create(T clazz);
+    T create(T element);
 
-    List<T> createAll(T... clazzes);
+    List<T> createAll(T... element);
 
-    List<T> createAll(List<T> clazzes);
+    List<T> createAll(List<T> element);
 
-    void update(T clazz);
+    void update(T element);
 
-    void delete(T clazz);
+    void delete(T element);
 
     void deleteById(ID id);
 
-    boolean exists(T clazz);
+    boolean exists(T element);
 
     List<T> findAll();
 

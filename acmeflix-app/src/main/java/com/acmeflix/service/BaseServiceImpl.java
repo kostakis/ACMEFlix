@@ -15,42 +15,42 @@ public abstract  class BaseServiceImpl<T extends BaseModel>
     abstract JpaRepository<T, Long> getRepository(); //Will be implemented by each service to get the relevant service
 
     @Override
-    public T create(final T clazz) {
-        logger.trace("Creating {}.", clazz);
-        return getRepository().save(clazz);
+    public T create(final T element) { //Simle insertion to the DB of an entity, a new record
+        logger.trace("Creating {}.", element);
+        return getRepository().save(element);
     }
 
     @Override
-    public List<T> createAll(T... clazzes) {
-        logger.trace("CreateAll with T... clazzes");
-        return createAll(List.of(clazzes));
+    public List<T> createAll(final T... element) { //Many records insertion
+        logger.trace("CreateAll with T... element");
+        return createAll(List.of(element)); //It will just create a list with all the records
     }
 
     @Override
-    public List<T> createAll(final List<T> categories) {
+    public List<T> createAll(final List<T> elements) {
         logger.trace("Create all with List<T> categories");
 
         final List<T> updatedEntities = new ArrayList<>();
 
-        for (final T clazz : categories) {
-            updatedEntities.add(create(clazz));
+        for (final T element : elements) { //For each record
+            updatedEntities.add(create(element)); //Call the single record insertion
         }
         return updatedEntities;
     }
 
     @Override
-    public void update(final T clazz) {
-        logger.trace("Updating {}.", clazz);
-        getRepository().save(clazz);
+    public void update(final T element) { //Update DB
+        logger.trace("Updating {}.", element);
+        getRepository().save(element);
     }
 
     @Override
-    public void delete(final T clazz) {
-        logger.trace("Deleting {}.", clazz);
-        getRepository().delete(clazz);
+    public void delete(final T element) { //Delete from DB
+        logger.trace("Deleting {}.", element);
+        getRepository().delete(element);
     }
 
-    private boolean exists(Long id) {
+    private boolean exists(Long id) { //Check if the current ID exist in the DB
         return getRepository().existsById(id);
     }
 
@@ -59,26 +59,26 @@ public abstract  class BaseServiceImpl<T extends BaseModel>
         logger.trace("Deleting entity with id {}.", id);
         if (exists(id)) {
             getRepository().deleteById(id);
-        } /*else {
+        } /*else { //TODO check this
 			throw new NoSuchElementException("Could not perform delete operation to a non-existent object.");
 		}*/
 
     }
 
     @Override
-    public boolean exists(final T clazz) {
-        logger.trace("Checking whether {} exists.", clazz);
-        return getRepository().existsById(clazz.getId());
+    public boolean exists(final T element) {
+        logger.trace("Checking whether {} exists.", element);
+        return getRepository().existsById(element.getId());
     }
 
     @Override
-    public List<T> findAll() {
+    public List<T> findAll() { //Get all the records as a list of a DB table
         logger.trace("Retrieving all data.");
         return getRepository().findAll();
     }
 
     @Override
-    public T find(Long id) {
+    public T find(Long id) { //Get a record of the db using the ID, maybe each service could override to be more specific excpetion
         return getRepository().findById(id).orElseThrow(NoSuchElementException::new);
     }
 

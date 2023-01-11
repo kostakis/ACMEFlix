@@ -61,6 +61,16 @@ public class GenerateUsers extends AbstractLogComponent implements CommandLineRu
                        .build()
        );
 
+       User user = userService.findByEmail("asd");
+       //Just testing
+       if(user == null) {
+           logger.info("Ok it is null");
+           return;
+       }
+       user.setEmail("asda@as.c");
+
+       userService.update(user);
+
        logger.info("Created Users {}", users);
     }
 }

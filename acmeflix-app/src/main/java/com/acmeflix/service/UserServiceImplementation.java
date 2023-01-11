@@ -16,4 +16,9 @@ public class UserServiceImplementation extends BaseServiceImpl<User>
     JpaRepository<User, Long> getRepository() {
         return userRepository;
     }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByemail(email);
+    }
 }

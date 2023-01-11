@@ -4,5 +4,5 @@ import com.acmeflix.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-
+    User findByemail(String email); //Use findBy + Column name, Jpa does the rest of magic...
 }
