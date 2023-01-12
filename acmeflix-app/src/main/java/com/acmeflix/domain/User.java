@@ -33,7 +33,4 @@ public class User extends BaseModel {
     @NotNull ( message = "Last name can not be null")
     @Column(length = 50, nullable = false)
     private String password; //Just leave it simple, a plain text string also will stored to the DB
-
-    //Idk if this should be in the domain class
-    static int maxProfiles = 4; //Each user may have up to 4 profiles
 }
