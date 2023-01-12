@@ -4,16 +4,19 @@ import com.acmeflix.domain.User;
 import com.acmeflix.service.BaseService;
 import com.acmeflix.service.UserService;
 import com.acmeflix.transfer.ApiResponse;
+import com.acmeflix.transfer.resource.UserResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Email;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("users")
+@RequestMapping(value = "users")
 public class UserController extends BaseController<User> {
 
     private final UserService userService;
@@ -75,10 +78,54 @@ public class UserController extends BaseController<User> {
         return ResponseEntity.ok(apiResponse);
     }
 
+    @PostMapping(value = "/update/{id}")
+    public ResponseEntity<?> updateExistingUser(@PathVariable Long id,
+                                                @RequestParam("email") Optional<String> email,
+                                                @RequestParam("firstname") Optional<String> firstname,
+                                                @RequestParam("lastname") Optional<String> lastname,
+                                                @RequestParam("password") Optional<String> password)
+    {
+        //TODO check validation, for example is email correct??
+        logger.info("Received post request: /users/update/{}", id);
+
+        checkPositiveId(id);
+
+        User user = userService.find(id); //Will throw if not found
+
+        email.ifPresent(newEmail-> {
+            logger.info("old email is: {}", user.getEmail());
+            logger.info("New email is: {}", newEmail);
+            user.setEmail(newEmail);
+        });
+
+        firstname.ifPresent(newFirstName-> {
+            logger.info("old first name is: {}", user.getFirstName());
+            logger.info("New first name is: {}", newFirstName);
+            user.setFirstName(newFirstName);
+        });
+
+        lastname.ifPresent(newLastName-> {
+            logger.info("old last name is: {}", user.getLastName());
+            logger.info("New last name is: {}", newLastName);
+            user.setLastName(newLastName);
+        });
+
+        password.ifPresent(newPass-> {
+            logger.info("old pass is: {}", user.getPassword());
+            logger.info("New pass is: {}", newPass);
+            user.setPassword(newPass);
+        });
+
+        userService.update(user);
+
+        return ResponseEntity.ok("User Updated");
+    }
+
     private void checkPositiveId(Long id) {
         if(id < 0) {
             logger.info("Id can not be zero, bad request");
             throw new IllegalArgumentException("User id can not be negative");
         }
     }
+
 }
