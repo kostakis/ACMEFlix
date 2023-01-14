@@ -6,13 +6,17 @@ import com.acmeflix.service.BaseService;
 import com.acmeflix.service.ProfileService;
 import com.acmeflix.service.UserService;
 import com.acmeflix.transfer.ApiResponse;
+import com.acmeflix.transfer.resource.AccountHistory;
+import com.acmeflix.transfer.resource.ProfileHoursResource;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequiredArgsConstructor
@@ -54,7 +58,40 @@ public class UserController extends BaseController<User> {
     public ResponseEntity<ApiResponse<?>> getProfileByUserId(@PathVariable Long id) {
         logger.info("GET request /{}/profiles", id);
 
-        return null;
+        User user = userService.find(id);
+        logger.info("Found user {}", user);
+
+        List<Profile> allProfiles = profileService.findByUser(user);
+
+        List<ProfileHoursResource> profileHoursResources = new ArrayList<>();
+        for (Profile profile : allProfiles) {
+            logger.info("Viewed minutes {}", profile.getViewedMinutes());
+            profileHoursResources.add(ProfileHoursResource.builder()
+                    .profileID(profile.getId())
+                    .viewedMinutes(profile.getViewedMinutes())
+                    .profileName(profile.getName())
+                    .build());
+        }
+
+
+        ApiResponse<List<ProfileHoursResource>> apiResponse = new ApiResponse<>();
+        apiResponse.setData(profileHoursResources);
+
+        return ResponseEntity.ok(apiResponse);
+    }
+
+    @GetMapping("allviewhistory")
+    public ResponseEntity<ApiResponse<?>> getAllViewHistory() {
+        logger.info("GET request users/allviewhistory");
+
+        List<AccountHistory> allProfilesAllUsers = profileService.mapToAccountHistory(userService.getAllIds());
+
+        List<AccountHistory> accountHistory = new ArrayList<>();
+
+        ApiResponse<List<AccountHistory>> apiResponse = new ApiResponse<>();
+        apiResponse.setData(allProfilesAllUsers);
+
+        return ResponseEntity.ok(apiResponse);
     }
 
 
@@ -62,7 +99,7 @@ public class UserController extends BaseController<User> {
     public ResponseEntity<ApiResponse<?>> findUserByEmail(@RequestParam("email") String email) {
         logger.info("GET request users?email={}", email);
 
-        ApiResponse<User> apiResponse = new ApiResponse<User>();
+        ApiResponse<User> apiResponse = new ApiResponse<>();
 
         User user = userService.findByEmail(email);
         if(user == null) {
@@ -92,37 +129,7 @@ public class UserController extends BaseController<User> {
                                                 @RequestParam("lastname") Optional<String> lastname,
                                                 @RequestParam("password") Optional<String> password)
     {
-        //TODO check validation, for example is email correct??
-        logger.info("Received post request: /users/update/{}", id);
-
-        User user = userService.find(id); //Will throw if not found
-
-        email.ifPresent(newEmail-> {
-            logger.info("old email is: {}", user.getEmail());
-            logger.info("New email is: {}", newEmail);
-            user.setEmail(newEmail);
-        });
-
-        firstname.ifPresent(newFirstName-> {
-            logger.info("old first name is: {}", user.getFirstName());
-            logger.info("New first name is: {}", newFirstName);
-            user.setFirstName(newFirstName);
-        });
-
-        lastname.ifPresent(newLastName-> {
-            logger.info("old last name is: {}", user.getLastName());
-            logger.info("New last name is: {}", newLastName);
-            user.setLastName(newLastName);
-        });
-
-        password.ifPresent(newPass-> {
-            logger.info("old pass is: {}", user.getPassword());
-            logger.info("New pass is: {}", newPass);
-            user.setPassword(newPass);
-        });
-
-        userService.update(user);
-
+        userService.update(id, email, firstname, lastname, password);
         return ResponseEntity.ok("User Updated");
     }
 }

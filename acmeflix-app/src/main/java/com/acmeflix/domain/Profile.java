@@ -2,6 +2,8 @@ package com.acmeflix.domain;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -24,7 +26,7 @@ import javax.persistence.Table;
 @ToString(callSuper = true)
 public class Profile extends BaseModel {
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false) //Many profiles only one user
+    @ManyToOne(optional = false) //Many profiles only one user
     private User user; //The user that owns this profile
 
     @NotNull (message = "Profile name can not be null")
@@ -32,13 +34,11 @@ public class Profile extends BaseModel {
     private String name; //Name of the profile
 
     @Column
-    private Double viewedHours; //How many hours this profile has viewed content movies and series
+    private Double viewedMinutes; //How many hours this profile has viewed content movies and series
 
     @ElementCollection
-    @Column
     private List<Long> movieHistory = new ArrayList<>();
 
     @ElementCollection
-    @Column
     private List<Long> tvShowHistory = new ArrayList<>();
 }

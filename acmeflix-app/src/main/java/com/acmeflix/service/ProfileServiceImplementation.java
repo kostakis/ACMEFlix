@@ -2,24 +2,27 @@ package com.acmeflix.service;
 
 import com.acmeflix.domain.Movie;
 import com.acmeflix.domain.Profile;
-import com.acmeflix.domain.TvShow;
 import com.acmeflix.domain.User;
-import com.acmeflix.repository.MovieRepository;
 import com.acmeflix.repository.ProfileRepository;
+import com.acmeflix.transfer.resource.AccountHistory;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
+import org.hibernate.Hibernate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
         implements ProfileService {
 
+    private final UserService userService;
     private final ProfileRepository profileRepository;
     private final MovieService movieService;
     private final TvShowService tvShowService;
@@ -31,7 +34,6 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
     @Override
     public Profile createUsingHistory(@NotNull Profile profile) {
        var movieHistory = profile.getMovieHistory();
-       var tvShowHistory = profile.getTvShowHistory();
 
        double movieDuration = 0;
        double tvShowDuration = 0;
@@ -41,20 +43,42 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
            movieDuration += movie.getDuration();
        }
 
-//       for(Long tvShowId: tvShowHistory) {
-//           TvShow show = tvShowService.find(tvShowId);
-//           tvShowDuration += show.getDuration();
-//       }
-
-       profile.setViewedHours(movieDuration + tvShowDuration);
+       profile.setViewedMinutes(movieDuration + tvShowDuration);
 
        return create(profile);
     }
 
     @Override
     public List<Profile> findByUser(@NonNull  User user) {
-        profileRepository.findByUser(user);
+        return profileRepository.findByUser(user);
+    }
 
-        return null;
+    @Override
+    @Transactional
+    public List<Profile> findByUserEager(@NonNull  User user) {
+        var profiles = profileRepository.findByUser(user);
+        for (Profile profile: profiles) {
+            Hibernate.initialize(profile.getMovieHistory());
+            Hibernate.initialize(profile.getTvShowHistory());
+        }
+
+        return profiles;
+    }
+
+    @Override
+    public List<AccountHistory> mapToAccountHistory(List<Long> allUserIds) {
+        List<AccountHistory> accountHistoryList = new LinkedList<>();
+
+        for(Long id : allUserIds) {
+            User user = userService.find(id);
+            var profiles = findByUserEager(user);
+            AccountHistory accountHistory = new AccountHistory();
+            accountHistory.setUser(user);
+            accountHistory.setProfiles(profiles);
+
+            accountHistoryList.add(accountHistory);
+        }
+
+        return accountHistoryList;
     }
 }

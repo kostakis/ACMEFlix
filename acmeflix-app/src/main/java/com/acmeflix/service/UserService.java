@@ -1,9 +1,20 @@
 package com.acmeflix.service;
 
+import com.acmeflix.domain.Profile;
 import com.acmeflix.domain.User;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface UserService extends BaseService<User, Long> {
     User findByEmail(String email);
 
-    void update(User user);
-}
+    List<Long> getAllIds();
+
+    void update(Long id, @RequestParam("email") Optional<String> email,
+                         @RequestParam("firstname") Optional<String> firstname,
+                         @RequestParam("lastname") Optional<String> lastname,
+                         @RequestParam("password") Optional<String> password);
+    }

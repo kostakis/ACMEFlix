@@ -2,7 +2,6 @@ package com.acmeflix.controller;
 
 import com.acmeflix.base.AbstractLogComponent;
 import com.acmeflix.domain.BaseModel;
-import com.acmeflix.domain.User;
 import com.acmeflix.service.MovieService;
 import com.acmeflix.service.TvShowService;
 import com.acmeflix.transfer.ApiResponse;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 @RestController
