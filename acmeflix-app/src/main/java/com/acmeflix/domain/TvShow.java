@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.util.Pair;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Getter
 @Entity
+@SuperBuilder
 @Table( name = "TVSHOWS", indexes = {@Index(columnList = "TVSHOWNAME")})
 @NoArgsConstructor
 @AllArgsConstructor
