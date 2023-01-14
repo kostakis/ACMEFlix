@@ -12,6 +12,7 @@ import lombok.extern.java.Log;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Service
@@ -21,10 +22,33 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
 
     private final ProfileRepository profileRepository;
     private final MovieService movieService;
-    private final TvShowService showService;
+    private final TvShowService tvShowService;
 
     JpaRepository<Profile, Long> getRepository() {
         return profileRepository;
+    }
+
+    @Override
+    public Profile createUsingHistory(@NotNull Profile profile) {
+       var movieHistory = profile.getMovieHistory();
+       var tvShowHistory = profile.getTvShowHistory();
+
+       double movieDuration = 0;
+       double tvShowDuration = 0;
+
+       for(Long movieId: movieHistory) {
+           Movie movie = movieService.find(movieId);
+           movieDuration += movie.getDuration();
+       }
+
+       for(Long tvShowId: tvShowHistory) {
+           TvShow show = tvShowService.find(tvShowId);
+           tvShowDuration += show.getDuration();
+       }
+
+       profile.setViewedHours(movieDuration + tvShowDuration);
+
+       return create(profile);
     }
 
     @Override
@@ -32,31 +56,5 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
         profileRepository.findByUser(user);
 
         return null;
-    }
-
-
-    @Override
-    public Profile create(final Profile element) { //Simle insertion to the DB of an entity, a new record
-        logger.trace("Creating profile {}.", element);
-
-        createInitialViewingHours(element);
-        return profileRepository.save(element);
-    }
-
-    private void createInitialViewingHours(Profile profile) {
-        int duration = 123;
-//        for (Long movieID : profile.getMovieHistory()) {
-//            Movie movie = movieService.find(movieID);
-//
-//            duration += movie.getDuration();
-//        }
-//
-//        for (Long tvShowId : profile.getTvShowHistory()) {
-//            TvShow show = showService.find(tvShowId);
-//
-//            duration += show.getDuration();
-//        }
-
-        profile.setViewedHours(duration);
     }
 }

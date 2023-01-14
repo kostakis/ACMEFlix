@@ -1,20 +1,20 @@
 package com.acmeflix.bootstrap;
 
 import com.acmeflix.base.AbstractLogComponent;
-import com.acmeflix.domain.User;
 import com.acmeflix.domain.Movie;
-//import com.acmeflix.service.UserService;
 import com.acmeflix.domain.enumeration.Category;
 import com.acmeflix.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 
 @Component
 @Profile("my-dev")
 @RequiredArgsConstructor
+@Order(2)
 //Made this simple class to make sure domain/services/repository work as expected
 //The rest of the generated data will be created at the import.sql
 public class GenerateMovies extends AbstractLogComponent implements CommandLineRunner {
@@ -126,17 +126,5 @@ public class GenerateMovies extends AbstractLogComponent implements CommandLineR
                         .rating(5.3f)
                         .build()
         );
-
-        Movie movie = movieService.findByMovieName("Avatar");
-        //Just testing
-        if(movie == null) {
-            logger.info("Ok it is null");
-            return;
-        }
-        movie.setMovieName("Avatar2");
-
-        movieService.update(movie);
-
-        logger.info("Created Movies {}", movies);
     }
 }

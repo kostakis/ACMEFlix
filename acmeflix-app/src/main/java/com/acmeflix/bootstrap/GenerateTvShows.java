@@ -7,18 +7,18 @@ import com.acmeflix.domain.enumeration.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
 
 @Component
 @Profile("my-dev")
 @RequiredArgsConstructor
+@Order(2)
 //Made this simple class to make sure domain/services/repository work as expected
 //The rest of the generated data will be created at the import.sql
 public class GenerateTvShows extends AbstractLogComponent implements CommandLineRunner {
 
     private final TvShowService tvShowService;
-
 
     @Override
     public void run(String... args) throws Exception {
@@ -485,17 +485,5 @@ public class GenerateTvShows extends AbstractLogComponent implements CommandLine
                         .rating(10f)
                         .build()
         );
-
-        TvShow tvShow = tvShowService.findByTvShowName("Ginny and Georgia");
-        //Just testing
-        if(tvShow == null) {
-            logger.info("Ok it is null");
-            return;
-        }
-        tvShow.setTvShowName("Ginny and Georgia 2");
-
-        tvShowService.update(tvShow);
-
-        logger.info("Created Movies {}", tvShows);
     }
 }

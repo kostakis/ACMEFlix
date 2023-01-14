@@ -32,7 +32,7 @@ public class Profile extends BaseModel {
     private String name; //Name of the profile
 
     @Column
-    private int viewedHours; //How many hours this profile has viewed content movies and series
+    private Double viewedHours; //How many hours this profile has viewed content movies and series
 
     @ElementCollection
     @Column
