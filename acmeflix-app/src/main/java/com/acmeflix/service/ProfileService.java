@@ -17,4 +17,6 @@ public interface ProfileService extends BaseService<Profile, Long> {
     public List<Profile> findByUserEager(User user);
 
     List<AccountHistory> mapToAccountHistory(List<Long> allUserIds);
+
+    List<Profile> findAllEager();
 }

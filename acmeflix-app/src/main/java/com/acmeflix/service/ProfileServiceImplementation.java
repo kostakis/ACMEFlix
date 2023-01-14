@@ -81,4 +81,16 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
 
         return accountHistoryList;
     }
+
+    @Override
+    @Transactional
+    public List<Profile> findAllEager() {
+        var e = findAll();
+        for(Profile profile: e) {
+            Hibernate.initialize(profile.getMovieHistory());
+            Hibernate.initialize(profile.getTvShowHistory());
+        }
+
+        return e;
+    }
 }
