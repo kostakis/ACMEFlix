@@ -1,21 +1,27 @@
 package com.acmeflix.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
 
+@Data
+//@Builder
+@SuperBuilder
 @Setter
 @Getter
 @Entity
 @Table(name = "PROFILES", indexes = {@Index(columnList = "user_id")})
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(callSuper = true)
 public class Profile extends BaseModel {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false) //Many profiles only one user

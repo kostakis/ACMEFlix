@@ -1,5 +1,6 @@
 package com.acmeflix.service;
 
+import com.acmeflix.domain.Movie;
 import com.acmeflix.domain.TvShow;
 import com.acmeflix.repository.TvShowRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,5 +14,12 @@ public class TvShowServiceImplementation extends BaseServiceImpl<TvShow>
 
     private final TvShowRepository tvshowRepository;
 
-    JpaRepository<TvShow, Long> getRepository() { return tvshowRepository;}
+    JpaRepository<TvShow, Long> getRepository() {
+        return tvshowRepository;
+    }
+
+    @Override
+    public TvShow findByTvShowName(String tvShowName) {
+        return tvshowRepository.findByTvShowName(tvShowName);
+    }
 }

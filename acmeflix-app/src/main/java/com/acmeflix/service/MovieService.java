@@ -1,7 +1,9 @@
 package com.acmeflix.service;
 
 import com.acmeflix.domain.Movie;
-public interface MovieService extends BaseService<Movie, Long> {
+import com.acmeflix.domain.User;
 
+public interface MovieService extends BaseService<Movie, Long> {
+    Movie findByMovieName(String movieName);
 
 }
