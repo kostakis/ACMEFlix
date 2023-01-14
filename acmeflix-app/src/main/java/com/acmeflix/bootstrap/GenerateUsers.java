@@ -2,11 +2,14 @@ package com.acmeflix.bootstrap;
 
 import com.acmeflix.base.AbstractLogComponent;
 import com.acmeflix.domain.User;
+import com.acmeflix.service.ProfileService;
 import com.acmeflix.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 
 @Component
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Component;
 public class GenerateUsers extends AbstractLogComponent implements CommandLineRunner {
 
     private final UserService userService;
+    private final ProfileService profileService;
 
 
     @Override
@@ -61,16 +65,14 @@ public class GenerateUsers extends AbstractLogComponent implements CommandLineRu
                        .build()
        );
 
-       User user = userService.findByEmail("asd");
-       //Just testing
-       if(user == null) {
-           logger.info("Ok it is null");
-           return;
-       }
-       user.setEmail("asda@as.c");
+        com.acmeflix.domain.Profile profile = new com.acmeflix.domain.Profile();
 
-       userService.update(user);
+        User user = userService.find(1L);
 
-       logger.info("Created Users {}", users);
+        profile.setUser(user);
+        profile.setName("asdasd");
+        profile.setMovieHistory(List.of(1L));
+
+        profileService.create(profile);
     }
 }

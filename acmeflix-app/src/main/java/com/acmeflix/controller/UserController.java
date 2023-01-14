@@ -1,7 +1,9 @@
 package com.acmeflix.controller;
 
+import com.acmeflix.domain.Profile;
 import com.acmeflix.domain.User;
 import com.acmeflix.service.BaseService;
+import com.acmeflix.service.ProfileService;
 import com.acmeflix.service.UserService;
 import com.acmeflix.transfer.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class UserController extends BaseController<User> {
 
     private final UserService userService;
+    private final ProfileService profileService;
 
     @Override
     BaseService<User, Long> getBaseService() {
@@ -46,6 +49,14 @@ public class UserController extends BaseController<User> {
 
         return ResponseEntity.ok(apiResponse);
     }
+
+    @GetMapping("/{id}/profiles")
+    public ResponseEntity<ApiResponse<?>> getProfileByUserId(@PathVariable Long id) {
+        logger.info("GET request /{}/profiles", id);
+
+        return null;
+    }
+
 
     @GetMapping(params = {"email"})
     public ResponseEntity<ApiResponse<?>> findUserByEmail(@RequestParam("email") String email) {
