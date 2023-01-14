@@ -4,12 +4,10 @@ import com.acmeflix.domain.User;
 import com.acmeflix.service.BaseService;
 import com.acmeflix.service.UserService;
 import com.acmeflix.transfer.ApiResponse;
-import com.acmeflix.transfer.resource.UserResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.Email;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -42,7 +40,6 @@ public class UserController extends BaseController<User> {
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<?>> findUserById(@PathVariable Long id) {
         logger.info("GET request users/{}", id);
-        checkPositiveId(id);
 
         ApiResponse<User> apiResponse = new ApiResponse<User>();
         apiResponse.setData(userService.find(id)); //If user not found exception is thrown
@@ -68,7 +65,6 @@ public class UserController extends BaseController<User> {
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<?>> deleteUserById(@PathVariable Long id) {
         logger.info("DELETE request users/{}", id);
-        checkPositiveId(id);
 
         ApiResponse<String> apiResponse = new ApiResponse<String>();
         apiResponse.setData("Deletion of user id: " + id + " was successfully");
@@ -87,8 +83,6 @@ public class UserController extends BaseController<User> {
     {
         //TODO check validation, for example is email correct??
         logger.info("Received post request: /users/update/{}", id);
-
-        checkPositiveId(id);
 
         User user = userService.find(id); //Will throw if not found
 
@@ -120,12 +114,4 @@ public class UserController extends BaseController<User> {
 
         return ResponseEntity.ok("User Updated");
     }
-
-    private void checkPositiveId(Long id) {
-        if(id < 0) {
-            logger.info("Id can not be zero, bad request");
-            throw new IllegalArgumentException("User id can not be negative");
-        }
-    }
-
 }
