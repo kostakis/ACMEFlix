@@ -10,6 +10,8 @@ import org.springframework.data.util.Pair;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -22,35 +24,23 @@ import javax.validation.constraints.NotNull;
 public class TvShow extends BaseModel {
 
     @NotNull
-    @Column(name = "TVSHOWNAME", length = 50, nullable = false)
+    @Column(name = "TVSHOWNAME", length = 50, unique = true, nullable = false)
     private String tvShowName;
-
-    @NotNull
-    @Column(nullable = false)
-    private Integer season;
-
-    @NotNull
-    @Column(nullable = false)
-    private Integer episode;
 
     @NotNull(message = "Tv show category cannot be null")
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
     private Category category;
 
-    @NotNull(message = "Description can not be null")
-    @Column(nullable = false)
-    private String description;
-
-    @NotNull( message = "Tv show can not be null")
-    @Column(nullable = false)
-    private Integer tvShowYear;
-
-    @NotNull
-    @Column (nullable = false)
-    private Double duration;
-
     @NotNull
     @Column (nullable = false)
     private Float rating;
+
+    @NotNull( message = "Tv show year can not be null")
+    @Column(nullable = false)
+    private Integer tvShowYear;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<TvShowEpisodes> tvShowSeasons = new ArrayList<>();
+
 }

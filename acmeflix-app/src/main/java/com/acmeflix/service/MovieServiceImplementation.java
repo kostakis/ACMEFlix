@@ -7,14 +7,25 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class MovieServiceImplementation extends BaseServiceImpl<Movie>
         implements MovieService {
 
     private final MovieRepository movieRepository;
+
     JpaRepository<Movie, Long> getRepository() {
         return movieRepository;
+    }
+
+    @Override
+    public List<Movie> findByInitialMovieName(String initialMovieName) {
+
+        List<Movie> movieList =  movieRepository.findBymovieNameStartingWith(initialMovieName);
+        return movieList;
     }
 
     @Override

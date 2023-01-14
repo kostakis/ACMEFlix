@@ -41,10 +41,10 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
            movieDuration += movie.getDuration();
        }
 
-       for(Long tvShowId: tvShowHistory) {
-           TvShow show = tvShowService.find(tvShowId);
-           tvShowDuration += show.getDuration();
-       }
+//       for(Long tvShowId: tvShowHistory) {
+//           TvShow show = tvShowService.find(tvShowId);
+//           tvShowDuration += show.getDuration();
+//       }
 
        profile.setViewedHours(movieDuration + tvShowDuration);
 
