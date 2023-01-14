@@ -26,11 +26,8 @@ public class SearchController extends AbstractLogComponent  {
     public ResponseEntity<ApiResponse<?>> findMovieByInitialName(@RequestParam("name") String initialName) {
         logger.info( "Received name: {}", initialName);
 
-        //logger.info("Movie list is: {}", movieList);
-
         var movieList = movieService.findByInitialMovieName(initialName);
-
-
+        logger.info("Movie list is: {}", movieList);
 
         return null;
     }
