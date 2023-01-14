@@ -18,9 +18,9 @@ public class TvShowServiceImplementation extends BaseServiceImpl<TvShow>
     JpaRepository<TvShow, Long> getRepository() {
         return tvshowRepository;
     }
+
     @Override
     public List<TvShow> findByInitialTvShowName(String initialTvShowName) {
-
         List<TvShow> tvShowList =  tvshowRepository.findBytvShowNameStartingWith(initialTvShowName);
         return tvShowList;
     }

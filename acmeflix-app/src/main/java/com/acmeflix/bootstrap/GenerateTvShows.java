@@ -60,7 +60,7 @@ public class GenerateTvShows extends AbstractLogComponent implements CommandLine
         tvShow.setCategory(Category.COMEDY);
         tvShow.setRating(9.0f);
 
-        tvShow.setTvShowSeasons(List.of(tvShowEpisodes,tvShowEpisodes2,tvShowEpisodes3,tvShowEpisodes4,tvShowEpisodes5));
+        tvShow.setEpisode(List.of(tvShowEpisodes,tvShowEpisodes2,tvShowEpisodes3,tvShowEpisodes4,tvShowEpisodes5));
 
         tvShowService.create(tvShow);
 

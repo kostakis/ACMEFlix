@@ -40,7 +40,7 @@ public class TvShow extends BaseModel {
     @Column(nullable = false)
     private Integer tvShowYear;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<TvShowEpisodes> tvShowSeasons = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<TvShowEpisodes> episode = new ArrayList<>(); //NULL
 
 }

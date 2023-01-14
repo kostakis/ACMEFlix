@@ -11,11 +11,11 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Data
-@Entity
-@Table(name = "TVSHOWEPISODES")
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
+@Entity
+@Table(name = "TVSHOWEPISODES")
 public class TvShowEpisodes extends BaseModel {
 
     @NotNull
