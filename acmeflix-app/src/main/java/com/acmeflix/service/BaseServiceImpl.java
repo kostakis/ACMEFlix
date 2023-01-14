@@ -57,12 +57,15 @@ public abstract  class BaseServiceImpl<T extends BaseModel>
     @Override
     public void deleteById(final Long id) {
         logger.trace("Deleting entity with id {}.", id);
-        if (exists(id)) {
+        if (exists(id))
+        {
             getRepository().deleteById(id);
-        } /*else { //TODO check this
-			throw new NoSuchElementException("Could not perform delete operation to a non-existent object.");
-		}*/
-
+            logger.info("User with id: {} deleted", id);
+        }
+        else
+        {
+			throw new NoSuchElementException("Id: " + id + " you are tyring to delete does not exist");
+		}
     }
 
     @Override
@@ -79,7 +82,8 @@ public abstract  class BaseServiceImpl<T extends BaseModel>
 
     @Override
     public T find(Long id) { //Get a record of the db using the ID, maybe each service could override to be more specific excpetion
-        return getRepository().findById(id).orElseThrow(NoSuchElementException::new);
+        return getRepository().findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Can not find id: " + id));
     }
 
     public T get(Long id) {
