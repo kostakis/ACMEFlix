@@ -2,6 +2,9 @@ package com.acmeflix.domain.enumeration;
 
 import com.acmeflix.domain.BaseModel;
 
+import javax.persistence.Table;
+
+@Table
 //Different movie categories
 public enum Category {
     ACTION,
@@ -11,5 +14,5 @@ public enum Category {
     DRAMA,
     HORROR,
     ROMANCE,
-    SCIFI
+    SCIFI ;
 }

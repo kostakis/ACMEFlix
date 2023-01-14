@@ -124,6 +124,13 @@ public class GenerateMovies extends AbstractLogComponent implements CommandLineR
                         .movieYear(2015)
                         .duration(89.2)
                         .rating(5.3f)
+                        .build(),
+                Movie.builder().movieName("Babylon")
+                        .category(Category.DRAMA)
+                        .description("Who cares")
+                        .movieYear(2022)
+                        .duration(110.1)
+                        .rating(7.3f)
                         .build()
         );
     }

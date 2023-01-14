@@ -38,13 +38,29 @@ public class GenerateTvShows extends AbstractLogComponent implements CommandLine
         tvShowEpisodes2.setSeason(1);
         tvShowEpisodes2.setDuration(123);
 
+        TvShowEpisodes tvShowEpisodes3 = new TvShowEpisodes();
+        tvShowEpisodes3.setEpisode(3);
+        tvShowEpisodes3.setSeason(1);
+        tvShowEpisodes3.setDuration(123);
+
+        TvShowEpisodes tvShowEpisodes4 = new TvShowEpisodes();
+        tvShowEpisodes4.setEpisode(1);
+        tvShowEpisodes4.setSeason(2);
+        tvShowEpisodes4.setDuration(123);
+
+        TvShowEpisodes tvShowEpisodes5 = new TvShowEpisodes();
+        tvShowEpisodes5.setEpisode(2);
+        tvShowEpisodes5.setSeason(2);
+        tvShowEpisodes5.setDuration(123);
+
+
         TvShow tvShow = new TvShow();
         tvShow.setTvShowName("Bing bang theory");
         tvShow.setTvShowYear(2008);
-        tvShow.setCategory(Category.DRAMA);
+        tvShow.setCategory(Category.COMEDY);
         tvShow.setRating(9.0f);
 
-        tvShow.setTvShowSeasons(List.of(tvShowEpisodes, tvShowEpisodes2));
+        tvShow.setTvShowSeasons(List.of(tvShowEpisodes,tvShowEpisodes2,tvShowEpisodes3,tvShowEpisodes4,tvShowEpisodes5));
 
         tvShowService.create(tvShow);
 

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface TvShowRepository extends JpaRepository<TvShow, Long> {
 
-    //List<TvShow> findBytvShowNameNameStartingWith(String initialTvShowName);
+    List<TvShow> findBytvShowNameStartingWith(String initialTvShowName);
 
     TvShow findByTvShowName(String tvShowName);
 }

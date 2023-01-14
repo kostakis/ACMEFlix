@@ -29,7 +29,13 @@ public class SearchController extends AbstractLogComponent  {
         var movieList = movieService.findByInitialMovieName(initialName);
         logger.info("Movie list is: {}", movieList);
 
+        var tvShowList = tvShowService.findByInitialTvShowName(initialName);
+        logger.info("TvShow list is: {}", tvShowList);
+
         return null;
     }
 
 }
+
+
+
