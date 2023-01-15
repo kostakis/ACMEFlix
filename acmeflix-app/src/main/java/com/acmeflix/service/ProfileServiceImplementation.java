@@ -1,6 +1,7 @@
 package com.acmeflix.service;
 
 import com.acmeflix.domain.*;
+import com.acmeflix.domain.enumeration.Category;
 import com.acmeflix.repository.ProfileRepository;
 import com.acmeflix.transfer.BaseWatchedInterface;
 import com.acmeflix.transfer.KeyValue;
@@ -11,11 +12,13 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -163,5 +166,19 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
 
         return allSeriesAndMovies;
 
+    }
+
+    @Override
+    public HashMap<Category, Integer> findTopCategories(List<BaseWatchedInterface> content, int max) {
+        HashMap<Category, Integer> cateogiresAndCounter = new HashMap<Category, Integer>();
+
+        for (BaseWatchedInterface baseWatchedInterface : content) {
+            cateogiresAndCounter.merge(baseWatchedInterface.getCategory(), 1, Integer::sum);
+        }
+
+        logger.info("printing");
+        cateogiresAndCounter.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).forEach(System.out::println);
+
+        return cateogiresAndCounter;
     }
 }

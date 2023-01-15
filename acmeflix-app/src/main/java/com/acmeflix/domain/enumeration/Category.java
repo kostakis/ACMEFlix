@@ -14,5 +14,5 @@ public enum Category {
     DRAMA,
     HORROR,
     ROMANCE,
-    SCIFI ;
+    SCIFI
 }

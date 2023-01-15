@@ -14,7 +14,8 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
     List<Profile> findByUser(User user);
 
     @Query(nativeQuery = true,
-            value = " SELECT MOVIEHISTORY as MovieId, COUNT(MOVIEHISTORY) as Counter, MOVIENAME as MovieName FROM PROFILE_MOVIEHISTORY " +
+            value = " SELECT MOVIEHISTORY as MovieId, COUNT(MOVIEHISTORY) as Counter, MOVIENAME as MovieName, CATEGORY as Category" +
+                    " FROM PROFILE_MOVIEHISTORY " +
                     "INNER JOIN MOVIES " +
                     "ON PROFILE_MOVIEHISTORY.MOVIEHISTORY  =  MOVIES.ID " +
                     "GROUP BY MOVIEHISTORY ORDER BY COUNTER DESC " +
@@ -24,7 +25,8 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
 
 
     @Query(nativeQuery = true,
-            value = "    SELECT TVSHOWHISTORY as TvShowId, COUNT(TVSHOWHISTORY) as Counter, TVSHOWNAME as TvShowName FROM PROFILE_TVSHOWHISTORY " +
+            value = "    SELECT TVSHOWHISTORY as TvShowId, COUNT(TVSHOWHISTORY) as Counter, TVSHOWNAME as TvShowName , CATEGORY as Category" +
+                    "    FROM PROFILE_TVSHOWHISTORY " +
                     "    INNER JOIN TVSHOWS" +
                     "    ON PROFILE_TVSHOWHISTORY.TVSHOWHISTORY  =  TVSHOWS.ID" +
                     "    GROUP BY TVSHOWHISTORY ORDER BY COUNTER DESC" +

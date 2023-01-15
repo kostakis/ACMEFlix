@@ -1,7 +1,7 @@
 package com.acmeflix.transfer;
 
 public interface TvShowIdAndWatchedCounter extends BaseWatchedInterface {
-    String getTvShowId();
+    Long getTvShowId();
 
     String getTvShowName();
 }
