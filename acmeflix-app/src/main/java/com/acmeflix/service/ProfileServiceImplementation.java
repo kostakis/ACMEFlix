@@ -4,6 +4,7 @@ import com.acmeflix.domain.Movie;
 import com.acmeflix.domain.Profile;
 import com.acmeflix.domain.User;
 import com.acmeflix.repository.ProfileRepository;
+import com.acmeflix.transfer.KeyValue;
 import com.acmeflix.transfer.resource.AccountHistory;
 import com.acmeflix.transfer.resource.MovieResource;
 import com.acmeflix.transfer.resource.ProfileResourceWithHistory;
@@ -115,5 +116,10 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
         }
 
         return e;
+    }
+
+    @Override
+    public List<KeyValue<Long, Integer>> findMostWatchedContent() {
+        return profileRepository.findMostWatchedContent();
     }
 }

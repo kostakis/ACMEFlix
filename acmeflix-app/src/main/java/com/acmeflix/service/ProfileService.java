@@ -2,6 +2,7 @@ package com.acmeflix.service;
 
 import com.acmeflix.domain.Profile;
 import com.acmeflix.domain.User;
+import com.acmeflix.transfer.KeyValue;
 import com.acmeflix.transfer.resource.AccountHistory;
 import lombok.NonNull;
 
@@ -19,4 +20,6 @@ public interface ProfileService extends BaseService<Profile, Long> {
     List<AccountHistory> mapToAccountHistory(List<Long> allUserIds);
 
     List<Profile> findAllEager();
+
+    List<KeyValue<Long, Integer>> findMostWatchedContent();
 }

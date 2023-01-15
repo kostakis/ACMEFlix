@@ -37,8 +37,10 @@ public class Profile extends BaseModel {
     private Integer viewedMinutes;
 
     @ElementCollection
+    @Column(name = "MOVIEHISTORY")
     private List<Long> movieHistory = new ArrayList<>();
 
     @ElementCollection
+    @Column(name = "TVSHOWHISTORY")
     private List<Long> tvShowHistory = new ArrayList<>();
 }
