@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 @RestController
@@ -64,7 +61,7 @@ public class ProfileController extends BaseController<Profile>{
         var allSeriesAndMovies = profileService.findTopSeriesAndMovies(10);
         var categories = profileService.findTopCategories(allSeriesAndMovies, 5);
 
-        ApiResponse<HashMap<Category, Integer>> apiResponse = new ApiResponse<>();
+        ApiResponse<List<Map.Entry<Category, Integer>>> apiResponse = new ApiResponse<>();
         apiResponse.setData(categories);
 
         return ResponseEntity.ok(apiResponse);

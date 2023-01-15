@@ -169,7 +169,7 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
     }
 
     @Override
-    public HashMap<Category, Integer> findTopCategories(List<BaseWatchedInterface> content, int max) {
+    public List<Map.Entry<Category, Integer>> findTopCategories(List<BaseWatchedInterface> content, int max) {
         HashMap<Category, Integer> cateogiresAndCounter = new HashMap<Category, Integer>();
 
         for (BaseWatchedInterface baseWatchedInterface : content) {
@@ -179,6 +179,10 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
         logger.info("printing");
         cateogiresAndCounter.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).forEach(System.out::println);
 
-        return cateogiresAndCounter;
+        List<Map.Entry<Category, Integer>> nlist = new ArrayList<>(cateogiresAndCounter.entrySet());
+        nlist.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+        logger.info("lala {}", nlist);
+
+        return nlist;
     }
 }

@@ -13,6 +13,7 @@ import lombok.NonNull;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface ProfileService extends BaseService<Profile, Long> {
@@ -33,6 +34,6 @@ public interface ProfileService extends BaseService<Profile, Long> {
 
     List<BaseWatchedInterface> findTopSeriesAndMovies(int max);
 
-    HashMap<Category, Integer> findTopCategories(List<BaseWatchedInterface> content, int max);
+    List<Map.Entry<Category, Integer>> findTopCategories(List<BaseWatchedInterface> content, int max);
 
 }
