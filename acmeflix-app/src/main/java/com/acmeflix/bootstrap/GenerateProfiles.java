@@ -50,7 +50,9 @@ public class GenerateProfiles extends AbstractLogComponent implements CommandLin
 
             Long myRandom = (long) ((Math.random() * (maxMovieId - minMovieId)) + minMovieId);
             Long myRandom1 = (long) ((Math.random() * (maxMovieId - minMovieId)) + minMovieId);
-            profile.setMovieHistory(List.of(myRandom, myRandom1));
+            Long myRandom2 = (long) ((Math.random() * (maxMovieId - minMovieId)) + minMovieId);
+
+            profile.setMovieHistory(List.of(myRandom, myRandom1, myRandom2));
 
             profileService.createUsingHistory(profile);
         }

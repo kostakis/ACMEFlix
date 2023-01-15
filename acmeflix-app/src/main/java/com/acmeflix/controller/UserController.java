@@ -7,16 +7,12 @@ import com.acmeflix.service.ProfileService;
 import com.acmeflix.service.UserService;
 import com.acmeflix.transfer.ApiResponse;
 import com.acmeflix.transfer.resource.AccountHistory;
-import com.acmeflix.transfer.resource.ProfileHoursResource;
+import com.acmeflix.transfer.resource.ProfileResource;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Hibernate;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RestController
 @RequiredArgsConstructor
@@ -63,10 +59,10 @@ public class UserController extends BaseController<User> {
 
         List<Profile> allProfiles = profileService.findByUser(user);
 
-        List<ProfileHoursResource> profileHoursResources = new ArrayList<>();
+        List<ProfileResource> profileHoursResources = new ArrayList<>();
         for (Profile profile : allProfiles) {
             logger.info("Viewed minutes {}", profile.getViewedMinutes());
-            profileHoursResources.add(ProfileHoursResource.builder()
+            profileHoursResources.add(ProfileResource.builder()
                     .profileID(profile.getId())
                     .viewedMinutes(profile.getViewedMinutes())
                     .profileName(profile.getName())
@@ -74,7 +70,7 @@ public class UserController extends BaseController<User> {
         }
 
 
-        ApiResponse<List<ProfileHoursResource>> apiResponse = new ApiResponse<>();
+        ApiResponse<List<ProfileResource>> apiResponse = new ApiResponse<>();
         apiResponse.setData(profileHoursResources);
 
         return ResponseEntity.ok(apiResponse);

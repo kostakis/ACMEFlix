@@ -7,10 +7,8 @@ import lombok.Setter;
 @Builder
 @Setter
 @Getter
-public class ProfileHoursResource extends BaseResource {
+public class ProfileResource extends BaseResource {
     private Long profileID;
-
     private String profileName;
-
     private Double viewedMinutes;
 }

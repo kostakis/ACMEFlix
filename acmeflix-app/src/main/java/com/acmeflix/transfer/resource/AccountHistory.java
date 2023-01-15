@@ -15,6 +15,5 @@ import java.util.List;
 public class AccountHistory extends BaseResource {
 
     private User user;
-
-    private List<Profile> profiles;
+    private List<ProfileResourceWithHistory> profiles;
 }

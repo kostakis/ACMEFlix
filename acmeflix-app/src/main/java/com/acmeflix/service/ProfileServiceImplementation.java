@@ -5,6 +5,8 @@ import com.acmeflix.domain.Profile;
 import com.acmeflix.domain.User;
 import com.acmeflix.repository.ProfileRepository;
 import com.acmeflix.transfer.resource.AccountHistory;
+import com.acmeflix.transfer.resource.MovieResource;
+import com.acmeflix.transfer.resource.ProfileResourceWithHistory;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -69,14 +72,34 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
     public List<AccountHistory> mapToAccountHistory(List<Long> allUserIds) {
         List<AccountHistory> accountHistoryList = new LinkedList<>();
 
-        for(Long id : allUserIds) {
+        for (Long id : allUserIds) { //For each user
             User user = userService.find(id);
-            var profiles = findByUserEager(user);
+
+            var profiles = findByUserEager(user); //Get all the profiles
+
             AccountHistory accountHistory = new AccountHistory();
             accountHistory.setUser(user);
-            accountHistory.setProfiles(profiles);
+
+            List<ProfileResourceWithHistory> userProfiles = new ArrayList<>();
+
+            for (Profile profile : profiles) { //For each profile of each user
+                ProfileResourceWithHistory profileResourceWithHistory = new ProfileResourceWithHistory(profile.getId(), profile.getName(), profile.getViewedMinutes());
+                List<MovieResource> movieResources = new ArrayList<>();
+
+                var watchedMovies = profile.getMovieHistory();
+                for(Long movie: watchedMovies) { //Get all the watched movies
+                    MovieResource movieResource = new MovieResource();
+                    movieResource.setMovieName(movieService.get(movie).getMovieName());
+                    movieResource.setId(movie);
+                    movieResources.add(movieResource);
+                }
+
+                profileResourceWithHistory.setMovieHistory(movieResources);
+                userProfiles.add(profileResourceWithHistory);
+            }
 
             accountHistoryList.add(accountHistory);
+            accountHistory.setProfiles(userProfiles);
         }
 
         return accountHistoryList;

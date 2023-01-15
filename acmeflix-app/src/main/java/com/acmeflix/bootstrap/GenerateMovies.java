@@ -131,6 +131,13 @@ public class GenerateMovies extends AbstractLogComponent implements CommandLineR
                         .movieYear(2022)
                         .duration(110.1)
                         .rating(7.3f)
+                        .build(),
+                Movie.builder().movieName("Transformers")
+                        .category(Category.ACTION)
+                        .description("Megatron")
+                        .movieYear(2007)
+                        .duration(140D)
+                        .rating(7f)
                         .build()
         );
     }
