@@ -1,10 +1,10 @@
 package com.acmeflix.service;
 
-import com.acmeflix.domain.Movie;
-import com.acmeflix.domain.Profile;
-import com.acmeflix.domain.User;
+import com.acmeflix.domain.*;
 import com.acmeflix.repository.ProfileRepository;
 import com.acmeflix.transfer.KeyValue;
+import com.acmeflix.transfer.MovieIdAndWatchedCounter;
+import com.acmeflix.transfer.TvShowIdAndWatchedCounter;
 import com.acmeflix.transfer.resource.AccountHistory;
 import com.acmeflix.transfer.resource.MovieResource;
 import com.acmeflix.transfer.resource.ProfileResourceWithHistory;
@@ -38,6 +38,7 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
     @Override
     public Profile createUsingHistory(@NotNull Profile profile) {
        var movieHistory = profile.getMovieHistory();
+       var tvShowHistory = profile.getTvShowHistory();
 
        var movieDuration = 0;
        var tvShowDuration = 0;
@@ -45,6 +46,16 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
        for(Long movieId: movieHistory) {
            Movie movie = movieService.find(movieId);
            movieDuration += movie.getDuration();
+       }
+
+
+       for(Long tvShowId: tvShowHistory) {
+           TvShow tvShow =  tvShowService.find(tvShowId);
+           var allEpisodes = tvShow.getEpisode();
+
+           for(TvShowEpisodes episode: allEpisodes) { //Just assume he has watched all the episodes
+               tvShowDuration+= episode.getDuration();
+           }
        }
 
        profile.setViewedMinutes(movieDuration + tvShowDuration);
@@ -119,7 +130,12 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
     }
 
     @Override
-    public List<KeyValue<Long, Integer>> findMostWatchedContent() {
-        return profileRepository.findMostWatchedContent();
+    public List<MovieIdAndWatchedCounter> findTopTenMovies() {
+        return profileRepository.findTopTenMovies();
+    }
+
+    @Override
+    public List<TvShowIdAndWatchedCounter> findTopTenSeries() {
+        return profileRepository.findTopTenSeries();
     }
 }

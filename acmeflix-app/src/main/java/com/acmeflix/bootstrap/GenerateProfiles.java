@@ -37,10 +37,13 @@ public class GenerateProfiles extends AbstractLogComponent implements CommandLin
 
 
         var allMovies = movieService.findAll();
-        //var allSeries = tvShowService.findAll();
+        var allSeries = tvShowService.findAll();
 
         Long minMovieId = allMovies.get(0).getId();
         Long maxMovieId = allMovies.get(allMovies.size() - 1).getId();
+
+        Long minSeriesId = allSeries.get(0).getId();
+        Long maxSeriesId = allSeries.get(allSeries.size() - 1).getId();
 
         //Creating profiles for each users
         for(User user: allusers) {
@@ -53,6 +56,11 @@ public class GenerateProfiles extends AbstractLogComponent implements CommandLin
             Long myRandom2 = (long) ((Math.random() * (maxMovieId - minMovieId)) + minMovieId);
 
             profile.setMovieHistory(List.of(myRandom, myRandom1, myRandom2));
+
+
+            Long myRandomSeries =  (long) ((Math.random() * (maxSeriesId - minSeriesId)) + minSeriesId);
+
+            profile.setTvShowHistory(List.of(myRandomSeries));
 
             profileService.createUsingHistory(profile);
         }

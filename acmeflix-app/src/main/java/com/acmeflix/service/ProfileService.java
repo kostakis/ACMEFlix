@@ -3,6 +3,8 @@ package com.acmeflix.service;
 import com.acmeflix.domain.Profile;
 import com.acmeflix.domain.User;
 import com.acmeflix.transfer.KeyValue;
+import com.acmeflix.transfer.MovieIdAndWatchedCounter;
+import com.acmeflix.transfer.TvShowIdAndWatchedCounter;
 import com.acmeflix.transfer.resource.AccountHistory;
 import lombok.NonNull;
 
@@ -21,5 +23,7 @@ public interface ProfileService extends BaseService<Profile, Long> {
 
     List<Profile> findAllEager();
 
-    List<KeyValue<Long, Integer>> findMostWatchedContent();
+    List<MovieIdAndWatchedCounter> findTopTenMovies();
+
+    List<TvShowIdAndWatchedCounter> findTopTenSeries();
 }
