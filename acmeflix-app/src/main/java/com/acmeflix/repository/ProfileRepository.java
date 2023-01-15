@@ -2,11 +2,11 @@ package com.acmeflix.repository;
 
 import com.acmeflix.domain.Profile;
 import com.acmeflix.domain.User;
-import com.acmeflix.transfer.KeyValue;
 import com.acmeflix.transfer.MovieIdAndWatchedCounter;
 import com.acmeflix.transfer.TvShowIdAndWatchedCounter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -19,9 +19,9 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
                     "INNER JOIN MOVIES " +
                     "ON PROFILE_MOVIEHISTORY.MOVIEHISTORY  =  MOVIES.ID " +
                     "GROUP BY MOVIEHISTORY ORDER BY COUNTER DESC " +
-                    "FETCH FIRST 10 ROWS ONLY"
+                    "FETCH FIRST :max ROWS ONLY"
     )
-    List<MovieIdAndWatchedCounter> findTopTenMovies();
+    List<MovieIdAndWatchedCounter> findTopMovies(@Param("max")  int max);
 
 
     @Query(nativeQuery = true,
@@ -30,7 +30,7 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
                     "    INNER JOIN TVSHOWS" +
                     "    ON PROFILE_TVSHOWHISTORY.TVSHOWHISTORY  =  TVSHOWS.ID" +
                     "    GROUP BY TVSHOWHISTORY ORDER BY COUNTER DESC" +
-                    "    FETCH FIRST 10 ROWS ONLY"
+                    "    FETCH FIRST :max ROWS ONLY"
     )
-    List<TvShowIdAndWatchedCounter> findTopTenSeries();
+    List<TvShowIdAndWatchedCounter> findTopSeries(@Param("max")  int max);
 }

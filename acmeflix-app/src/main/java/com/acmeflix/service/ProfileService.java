@@ -28,9 +28,9 @@ public interface ProfileService extends BaseService<Profile, Long> {
 
     List<Profile> findAllEager();
 
-    List<MovieIdAndWatchedCounter> findTopTenMovies();
+    List<MovieIdAndWatchedCounter> findTopMovies(int max);
 
-    List<TvShowIdAndWatchedCounter> findTopTenSeries();
+    List<TvShowIdAndWatchedCounter> findTopSeries(int max);
 
     List<BaseWatchedInterface> findTopSeriesAndMovies(int max);
 

@@ -4,7 +4,6 @@ import com.acmeflix.domain.*;
 import com.acmeflix.domain.enumeration.Category;
 import com.acmeflix.repository.ProfileRepository;
 import com.acmeflix.transfer.BaseWatchedInterface;
-import com.acmeflix.transfer.KeyValue;
 import com.acmeflix.transfer.MovieIdAndWatchedCounter;
 import com.acmeflix.transfer.TvShowIdAndWatchedCounter;
 import com.acmeflix.transfer.resource.*;
@@ -12,13 +11,11 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -143,19 +140,19 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
     }
 
     @Override
-    public List<MovieIdAndWatchedCounter> findTopTenMovies() {
-        return profileRepository.findTopTenMovies();
+    public List<MovieIdAndWatchedCounter> findTopMovies(int max) {
+        return profileRepository.findTopMovies(max);
     }
 
     @Override
-    public List<TvShowIdAndWatchedCounter> findTopTenSeries() {
-        return profileRepository.findTopTenSeries();
+    public List<TvShowIdAndWatchedCounter> findTopSeries(int max) {
+        return profileRepository.findTopSeries(max);
     }
 
     @Override
     public List<BaseWatchedInterface> findTopSeriesAndMovies(int max) {
-        var movies = findTopTenMovies();
-        var series = findTopTenSeries();
+        var movies = findTopMovies(max);
+        var series = findTopSeries(max);
 
         List<BaseWatchedInterface> allSeriesAndMovies = new ArrayList<>();
         allSeriesAndMovies.addAll(series);
