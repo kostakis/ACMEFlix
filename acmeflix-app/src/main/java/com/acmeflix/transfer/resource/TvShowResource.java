@@ -1,16 +1,15 @@
 package com.acmeflix.transfer.resource;
 
-
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-import java.io.Serializable;
-
-@Getter
 @Setter
-@ToString(callSuper = true)
+@Getter
 @NoArgsConstructor
-public class BaseResource implements Serializable {
+public class TvShowResource extends BaseResource {
+    Long id;
+
+    String tvShowName;
 }

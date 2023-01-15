@@ -2,10 +2,12 @@ package com.acmeflix.service;
 
 import com.acmeflix.domain.Profile;
 import com.acmeflix.domain.User;
+import com.acmeflix.transfer.BaseWatchedInterface;
 import com.acmeflix.transfer.KeyValue;
 import com.acmeflix.transfer.MovieIdAndWatchedCounter;
 import com.acmeflix.transfer.TvShowIdAndWatchedCounter;
 import com.acmeflix.transfer.resource.AccountHistory;
+import com.acmeflix.transfer.resource.BaseResource;
 import lombok.NonNull;
 
 import java.util.List;
@@ -26,4 +28,7 @@ public interface ProfileService extends BaseService<Profile, Long> {
     List<MovieIdAndWatchedCounter> findTopTenMovies();
 
     List<TvShowIdAndWatchedCounter> findTopTenSeries();
+
+    List<BaseWatchedInterface> findTopSeriesAndMovies(int max);
+
 }

@@ -13,5 +13,5 @@ public class ProfileResourceWithHistory extends ProfileResource {
     }
 
     List<MovieResource> movieHistory;
-    //TODO SHOWS
+    List<TvShowResource> tvHistory;
 }

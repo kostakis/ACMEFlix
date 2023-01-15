@@ -31,6 +31,4 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
                     "    FETCH FIRST 10 ROWS ONLY"
     )
     List<TvShowIdAndWatchedCounter> findTopTenSeries();
-
-
 }

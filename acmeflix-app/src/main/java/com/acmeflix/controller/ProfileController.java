@@ -48,21 +48,7 @@ public class ProfileController extends BaseController<Profile>{
     @GetMapping("/topten")
     public ResponseEntity<ApiResponse<?>> findTopTenMovies() {
 
-        var topList = profileService.findTopTenMovies();
-        List<? extends BaseWatchedInterface> baseTopMovies = topList;
-
-        var topSeries = profileService.findTopTenSeries();
-        List<? extends BaseWatchedInterface> baseTopSeries = topSeries;
-
-
-
-       List<BaseWatchedInterface> allSeriesAndMovies = new ArrayList<>();
-       allSeriesAndMovies.addAll(baseTopSeries);
-       allSeriesAndMovies.addAll(baseTopMovies);
-
-       //Keep only 10
-       allSeriesAndMovies = allSeriesAndMovies.stream().limit(10).toList();
-
+        var allSeriesAndMovies = profileService.findTopSeriesAndMovies(10);
 
         ApiResponse<List<BaseWatchedInterface>> apiResponse = new ApiResponse<>();
         apiResponse.setData(allSeriesAndMovies);
