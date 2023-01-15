@@ -38,8 +38,8 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
     public Profile createUsingHistory(@NotNull Profile profile) {
        var movieHistory = profile.getMovieHistory();
 
-       double movieDuration = 0;
-       double tvShowDuration = 0;
+       var movieDuration = 0;
+       var tvShowDuration = 0;
 
        for(Long movieId: movieHistory) {
            Movie movie = movieService.find(movieId);

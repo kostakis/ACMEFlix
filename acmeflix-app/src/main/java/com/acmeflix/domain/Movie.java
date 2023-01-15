@@ -40,7 +40,7 @@ public class Movie extends BaseModel {
 
     @NotNull
     @Column (nullable = false)
-    private Double duration;
+    private Integer duration; //Minutes
 
     @NotNull
     @Column (nullable = false)

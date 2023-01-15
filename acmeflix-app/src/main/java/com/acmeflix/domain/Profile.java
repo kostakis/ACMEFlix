@@ -34,7 +34,7 @@ public class Profile extends BaseModel {
     private String name; //Name of the profile
 
     @Column
-    private Double viewedMinutes; //How many hours this profile has viewed content movies and series
+    private Integer viewedMinutes;
 
     @ElementCollection
     private List<Long> movieHistory = new ArrayList<>();

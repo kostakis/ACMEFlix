@@ -10,5 +10,5 @@ import lombok.Setter;
 public class ProfileResource extends BaseResource {
     private Long profileID;
     private String profileName;
-    private Double viewedMinutes;
+    private Integer viewedMinutes;
 }

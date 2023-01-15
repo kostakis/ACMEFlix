@@ -8,7 +8,7 @@ import java.util.List;
 @Setter
 @Getter
 public class ProfileResourceWithHistory extends ProfileResource {
-    public ProfileResourceWithHistory(Long profileID, String profileName, Double viewedMinutes) {
+    public ProfileResourceWithHistory(Long profileID, String profileName, Integer viewedMinutes) {
         super(profileID, profileName, viewedMinutes);
     }
 
