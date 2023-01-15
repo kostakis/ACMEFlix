@@ -172,17 +172,21 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
     public List<Map.Entry<Category, Integer>> findTopCategories(List<BaseWatchedInterface> content, int max) {
         HashMap<Category, Integer> cateogiresAndCounter = new HashMap<Category, Integer>();
 
-        for (BaseWatchedInterface baseWatchedInterface : content) {
-            cateogiresAndCounter.merge(baseWatchedInterface.getCategory(), 1, Integer::sum);
+        for(BaseWatchedInterface la: content) {
+            logger.info("Category {}", la.getCategory());
+            logger.info("Category {}", la.getCounter());
         }
 
-        logger.info("printing");
-        cateogiresAndCounter.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).forEach(System.out::println);
+        for (BaseWatchedInterface baseWatchedInterface : content) {
+            var previousValue = cateogiresAndCounter.get(baseWatchedInterface.getCategory());
+            if(previousValue == null) previousValue = 0;
+            cateogiresAndCounter.put(baseWatchedInterface.getCategory(), previousValue + baseWatchedInterface.getCounter());
+        }
 
-        List<Map.Entry<Category, Integer>> nlist = new ArrayList<>(cateogiresAndCounter.entrySet());
-        nlist.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
-        logger.info("lala {}", nlist);
+        List<Map.Entry<Category, Integer>> sortedCategories = new ArrayList<>(cateogiresAndCounter.entrySet());
+        sortedCategories.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+        logger.info("Sorted categories {}", sortedCategories);
 
-        return nlist;
+        return sortedCategories.subList(0, max);
     }
 }
