@@ -57,8 +57,9 @@ public class UserController extends BaseController<User> {
     }
 
     @GetMapping("/{id}/profiles")
-    public ResponseEntity<ApiResponse<?>> getProfileByUserId(@PathVariable Long id) {
-        logger.info("GET request /{}/profiles", id);
+    public ResponseEntity<ApiResponse<?>> getProfileByUserId(@PathVariable Long id,
+                                                             @RequestParam("email") Optional<String> history) {
+        logger.info("GET request users/{}/profiles", id);
 
         User user = userService.find(id);
         logger.info("Found user {}", user);
@@ -69,6 +70,17 @@ public class UserController extends BaseController<User> {
         List<ProfileResource> profileHoursResources =  profileService.toProfileResource(allProfiles);
         return ResponseEntity.ok(ApiResponse.<List<ProfileResource>>builder()
                 .data(profileHoursResources)
+                .build());
+    }
+
+    @GetMapping("/{id}/profiles/history")
+    public ResponseEntity<ApiResponse<?>> getProfileHistory(@PathVariable Long id) {
+        logger.info("GET request users/{}/profiles/history", id);
+
+        List<AccountHistory> allProfilesAllUsers = profileService.mapToAccountHistory(List.of(id));
+
+        return ResponseEntity.ok(ApiResponse.<List<AccountHistory>>builder()
+                .data(allProfilesAllUsers)
                 .build());
     }
 
