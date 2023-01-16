@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.*;
 
 @Service
@@ -41,10 +42,8 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
         var tvShowDuration = 0;
 
         for (Long movieId : movieHistory) {
-            Movie movie = movieService.find(movieId);
-            movieDuration += movie.getDuration();
+            movieDuration += movieService.find(movieId).getDuration();
         }
-
 
         for (Long tvShowId : tvShowHistory) {
             TvShow tvShow = tvShowService.find(tvShowId);
@@ -84,44 +83,43 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
         for (Long id : allUserIds) { //For each user
             User user = userService.find(id);
 
-            var profiles = findByUserEager(user); //Get all the profiles
-
-            AccountHistory accountHistory = new AccountHistory();
-            accountHistory.setUser(user);
+            var profiles = findByUserEager(user); //Get all the profiles among with the histories
 
             List<ProfileResourceWithHistory> userProfiles = new ArrayList<>();
 
             for (Profile profile : profiles) { //For each profile of each user
-                ProfileResourceWithHistory profileResourceWithHistory = new ProfileResourceWithHistory(profile.getId(), profile.getName(), profile.getViewedMinutes());
-
                 List<MovieResource> movieResources = new ArrayList<>();
                 List<TvShowResource> tvShowResources = new ArrayList<>();
 
-
                 var watchedMovies = profile.getMovieHistory();
                 for (Long movie : watchedMovies) { //Get all the watched movies
-                    MovieResource movieResource = new MovieResource();
-                    movieResource.setMovieName(movieService.get(movie).getMovieName());
-                    movieResource.setId(movie);
-                    movieResources.add(movieResource);
+                    movieResources.add(MovieResource.builder()
+                            .movieName(movieService.get(movie).getMovieName())
+                            .id(movie)
+                            .build());
                 }
 
                 var watchedShows = profile.getTvShowHistory();
-                for (Long showId : watchedShows) { //Get all the watched movies
-                    TvShowResource tvShowResource = new TvShowResource();
-                    tvShowResource.setTvShowName(tvShowService.get(showId).getTvShowName());
-                    tvShowResource.setId(showId);
-                    tvShowResources.add(tvShowResource);
-
+                for (Long showId : watchedShows) { //Get all the watched tv shows
+                    tvShowResources.add(TvShowResource.builder()
+                            .tvShowName(tvShowService.get(showId).getTvShowName())
+                            .id(showId)
+                            .build());
                 }
 
-                profileResourceWithHistory.setMovieHistory(movieResources);
-                profileResourceWithHistory.setTvHistory(tvShowResources);
-                userProfiles.add(profileResourceWithHistory);
+                userProfiles.add(ProfileResourceWithHistory.builder() //Create the history using all the above
+                                .profileID(profile.getId())
+                                .profileName(profile.getName())
+                                .viewedMinutes(profile.getViewedMinutes())
+                                .movieHistory(movieResources)
+                                .tvHistory(tvShowResources)
+                                .build());
             }
 
-            accountHistoryList.add(accountHistory);
-            accountHistory.setProfiles(userProfiles);
+            accountHistoryList.add(AccountHistory.builder()
+                    .user(user)
+                    .profiles(userProfiles)
+                    .build());
         }
 
         return accountHistoryList;
@@ -185,5 +183,20 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
         logger.info("Sorted categories {}", sortedCategories);
 
         return sortedCategories.subList(0, max);
+    }
+
+    @Override
+    public List<ProfileResource> toProfileResource(List<Profile> profiles) {
+        List<ProfileResource> profileResources = new ArrayList<>();
+
+        for(Profile profile: profiles) {
+            profileResources.add(ProfileResource.builder()
+                    .profileID(profile.getId())
+                    .viewedMinutes(profile.getViewedMinutes())
+                    .profileName(profile.getName())
+                    .build());
+        }
+
+        return profileResources;
     }
 }

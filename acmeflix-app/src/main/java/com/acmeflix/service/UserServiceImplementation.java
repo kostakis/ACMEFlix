@@ -4,13 +4,12 @@ import com.acmeflix.domain.Profile;
 import com.acmeflix.domain.User;
 import com.acmeflix.repository.ProfileRepository;
 import com.acmeflix.repository.UserRepository;
+import com.acmeflix.transfer.resource.UserResource;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Service
@@ -27,7 +26,11 @@ public class UserServiceImplementation extends BaseServiceImpl<User>
 
     @Override
     public User findByEmail(String email) {
-        return userRepository.findByemail(email);
+        var user =  userRepository.findByemail(email);
+        if(user == null) {
+            throw new NoSuchElementException("User with email: " + email + " does not exist");
+        }
+        return user;
     }
 
     @Override
@@ -51,6 +54,22 @@ public class UserServiceImplementation extends BaseServiceImpl<User>
         password.ifPresent(user::setPassword);
 
         update(user);
+    }
+
+    @Override
+    public List<UserResource> toUserResource(List<User> users) {
+        List<UserResource> userResources = new ArrayList<>();
+
+        for(User user1: users) {
+            userResources.add(UserResource.builder()
+                    .firstName(user1.getFirstName())
+                    .lastName(user1.getLastName())
+                    .id(user1.getId())
+                    .email(user1.getEmail())
+                    .build());
+        }
+
+        return userResources;
     }
 
     @Override

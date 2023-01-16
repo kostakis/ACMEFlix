@@ -1,13 +1,10 @@
 package com.acmeflix.transfer.resource;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Setter
-@Getter
-@NoArgsConstructor
+@SuperBuilder
+@Data
 public class TvShowResource extends BaseResource {
     Long id;
 

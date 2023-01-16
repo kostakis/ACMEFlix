@@ -2,6 +2,7 @@ package com.acmeflix.service;
 
 import com.acmeflix.domain.Profile;
 import com.acmeflix.domain.User;
+import com.acmeflix.transfer.resource.UserResource;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -17,4 +18,6 @@ public interface UserService extends BaseService<User, Long> {
                          @RequestParam("firstname") Optional<String> firstname,
                          @RequestParam("lastname") Optional<String> lastname,
                          @RequestParam("password") Optional<String> password);
+
+    List<UserResource> toUserResource(List<User> users);
     }

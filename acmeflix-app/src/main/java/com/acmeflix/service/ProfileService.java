@@ -9,6 +9,7 @@ import com.acmeflix.transfer.MovieIdAndWatchedCounter;
 import com.acmeflix.transfer.TvShowIdAndWatchedCounter;
 import com.acmeflix.transfer.resource.AccountHistory;
 import com.acmeflix.transfer.resource.BaseResource;
+import com.acmeflix.transfer.resource.ProfileResource;
 import lombok.NonNull;
 
 import java.util.HashMap;
@@ -36,4 +37,5 @@ public interface ProfileService extends BaseService<Profile, Long> {
 
     List<Map.Entry<Category, Integer>> findTopCategories(List<BaseWatchedInterface> content, int max);
 
+    List<ProfileResource> toProfileResource(List<Profile> profiles);
 }

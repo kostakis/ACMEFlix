@@ -9,6 +9,7 @@ import com.acmeflix.service.UserService;
 import com.acmeflix.transfer.ApiResponse;
 import com.acmeflix.transfer.BaseWatchedInterface;
 import com.acmeflix.transfer.MovieIdAndWatchedCounter;
+import com.acmeflix.transfer.resource.ProfileResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

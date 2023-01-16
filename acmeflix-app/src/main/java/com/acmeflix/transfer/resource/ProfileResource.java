@@ -1,12 +1,11 @@
 package com.acmeflix.transfer.resource;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Builder
-@Setter
-@Getter
+@SuperBuilder
+@Data
+@AllArgsConstructor
 public class ProfileResource extends BaseResource {
     private Long profileID;
     private String profileName;

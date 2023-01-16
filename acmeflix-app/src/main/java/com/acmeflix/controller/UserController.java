@@ -8,6 +8,7 @@ import com.acmeflix.service.UserService;
 import com.acmeflix.transfer.ApiResponse;
 import com.acmeflix.transfer.resource.AccountHistory;
 import com.acmeflix.transfer.resource.ProfileResource;
+import com.acmeflix.transfer.resource.UserResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,25 +30,30 @@ public class UserController extends BaseController<User> {
 
     //Print all users
     @GetMapping
-    public ResponseEntity<ApiResponse<List<User>>> findAll() {
+    public ResponseEntity<?> findAll() {
         logger.info("GET request users/");
 
-        List<User> allUsers = userService.findAll();
+        List<UserResource> allUsers = userService.toUserResource(userService.findAll());
 
-        ApiResponse<List<User>> apiResponse = new ApiResponse<List<User>>();
-        apiResponse.setData(allUsers);
-
-        return ResponseEntity.ok(apiResponse);
+        return ResponseEntity.ok(ApiResponse.<List<UserResource>>builder()
+                .data(allUsers)
+                .build());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<?>> findUserById(@PathVariable Long id) {
         logger.info("GET request users/{}", id);
 
-        ApiResponse<User> apiResponse = new ApiResponse<User>();
-        apiResponse.setData(userService.find(id)); //If user not found exception is thrown
+        User user = (userService.find(id)); //If user not found exception is thrown
 
-        return ResponseEntity.ok(apiResponse);
+        return ResponseEntity.ok(ApiResponse.<UserResource>builder()
+                .data(UserResource.builder()
+                        .firstName(user.getFirstName())
+                        .lastName(user.getLastName())
+                        .email(user.getEmail())
+                        .id(user.getId())
+                        .build())
+                .build());
     }
 
     @GetMapping("/{id}/profiles")
@@ -59,21 +65,11 @@ public class UserController extends BaseController<User> {
 
         List<Profile> allProfiles = profileService.findByUser(user);
 
-        List<ProfileResource> profileHoursResources = new ArrayList<>();
-        for (Profile profile : allProfiles) {
-            logger.info("Viewed minutes {}", profile.getViewedMinutes());
-            profileHoursResources.add(ProfileResource.builder()
-                    .profileID(profile.getId())
-                    .viewedMinutes(profile.getViewedMinutes())
-                    .profileName(profile.getName())
-                    .build());
-        }
-
-
-        ApiResponse<List<ProfileResource>> apiResponse = new ApiResponse<>();
-        apiResponse.setData(profileHoursResources);
-
-        return ResponseEntity.ok(apiResponse);
+        //Bad design should have mapper.....
+        List<ProfileResource> profileHoursResources =  profileService.toProfileResource(allProfiles);
+        return ResponseEntity.ok(ApiResponse.<List<ProfileResource>>builder()
+                .data(profileHoursResources)
+                .build());
     }
 
     @GetMapping("allviewhistory")
@@ -82,12 +78,9 @@ public class UserController extends BaseController<User> {
 
         List<AccountHistory> allProfilesAllUsers = profileService.mapToAccountHistory(userService.getAllIds());
 
-        List<AccountHistory> accountHistory = new ArrayList<>();
-
-        ApiResponse<List<AccountHistory>> apiResponse = new ApiResponse<>();
-        apiResponse.setData(allProfilesAllUsers);
-
-        return ResponseEntity.ok(apiResponse);
+        return ResponseEntity.ok(ApiResponse.<List<AccountHistory>>builder()
+                .data(allProfilesAllUsers)
+                .build());
     }
 
 
@@ -95,27 +88,22 @@ public class UserController extends BaseController<User> {
     public ResponseEntity<ApiResponse<?>> findUserByEmail(@RequestParam("email") String email) {
         logger.info("GET request users?email={}", email);
 
-        ApiResponse<User> apiResponse = new ApiResponse<>();
-
         User user = userService.findByEmail(email);
-        if(user == null) {
-            throw new NoSuchElementException("User with email: " + email + " does not exist");
-        } else {
-            apiResponse.setData(userService.findByEmail(email));
-            return ResponseEntity.ok(apiResponse);
-        }
+
+        return ResponseEntity.ok(ApiResponse.<User>builder()
+                .data(user)
+                .build());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<?>> deleteUserById(@PathVariable Long id) {
         logger.info("DELETE request users/{}", id);
 
-        ApiResponse<String> apiResponse = new ApiResponse<String>();
-        apiResponse.setData("Deletion of user id: " + id + " was successfully");
+        userService.deleteById(id);
 
-        userService.deleteById(id); //Exception will be thrown if id does not exist. it will be caught by global exception handler
-
-        return ResponseEntity.ok(apiResponse);
+        return ResponseEntity.ok( ApiResponse.<String>builder()
+                .data("Deletion of user with id: " + id +" was successfull")
+                .build());
     }
 
     @PostMapping(value = "/update/{id}")
