@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,5 +29,17 @@ public class TvShowServiceImplementation extends BaseServiceImpl<TvShow>
     @Override
     public TvShow findByTvShowName(String tvShowName) {
         return tvshowRepository.findByTvShowName(tvShowName);
+    }
+
+    @Override
+    public List<Long> getAllIds() {
+        List<Long> ids = new ArrayList<>();
+        var all = findAll();
+
+        for(TvShow show: all) {
+            ids.add(show.getId());
+        }
+
+        return ids;
     }
 }

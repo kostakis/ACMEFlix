@@ -22,7 +22,6 @@ import java.util.List;
 public class GenerateTvShows extends AbstractLogComponent implements CommandLineRunner {
 
     private final TvShowService tvShowService;
-    private final TvShowService tvShowService2;
 
     @Override
     public void run(String... args) throws Exception {
@@ -159,8 +158,6 @@ public class GenerateTvShows extends AbstractLogComponent implements CommandLine
         tvShow3.setEpisode(List.of(tvShowEpisodes10,tvShowEpisodes11,tvShowEpisodes12));
         tvShow4.setEpisode(List.of(tvShowEpisodes13,tvShowEpisodes14,tvShowEpisodes16,tvShowEpisodes17,tvShowEpisodes18,tvShowEpisodes19));
 
-        tvShowService.create(tvShow);
-//        tvShowService2.create(tvShow2);
-
+        tvShowService.createAll(List.of(tvShow,tvShow2,tvShow3, tvShow4));
     }
 }

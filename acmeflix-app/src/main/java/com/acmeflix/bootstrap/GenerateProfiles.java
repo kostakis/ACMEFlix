@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Random;
 
 @Component
 @Profile("my-dev")
@@ -31,19 +32,18 @@ public class GenerateProfiles extends AbstractLogComponent implements CommandLin
     @NotNull
     private final TvShowService tvShowService;
 
+    Random randomGenerator = new Random();
+
+    private Long getRandom(List<Long> list) {
+        return list.get(randomGenerator.nextInt(list.size()));
+    }
+
     @Override
     public void run(String... args) throws Exception {
         var allusers = userService.findAll();
 
-
-        var allMovies = movieService.findAll();
-        var allSeries = tvShowService.findAll();
-
-        Long minMovieId = allMovies.get(0).getId();
-        Long maxMovieId = allMovies.get(allMovies.size() - 1).getId();
-
-        Long minSeriesId = allSeries.get(0).getId();
-        Long maxSeriesId = allSeries.get(allSeries.size() - 1).getId();
+        var allMovies = movieService.getAllIds();
+        var allSeries = tvShowService.getAllIds();
 
         //Creating profiles for each users
         for(User user: allusers) {
@@ -51,16 +51,12 @@ public class GenerateProfiles extends AbstractLogComponent implements CommandLin
             profile.setUser(user);
             profile.setName("myprofile1");
 
-            Long myRandom = (long) ((Math.random() * (maxMovieId - minMovieId)) + minMovieId);
-            Long myRandom1 = (long) ((Math.random() * (maxMovieId - minMovieId)) + minMovieId);
-            Long myRandom2 = (long) ((Math.random() * (maxMovieId - minMovieId)) + minMovieId);
+            profile.setMovieHistory(List.of(getRandom(allMovies),
+                                            getRandom(allMovies),
+                                            getRandom(allMovies)));
 
-            profile.setMovieHistory(List.of(myRandom, myRandom1, myRandom2));
-
-
-            Long myRandomSeries =  (long) ((Math.random() * (maxSeriesId - minSeriesId)) + minSeriesId);
-
-            profile.setTvShowHistory(List.of(myRandomSeries));
+            profile.setTvShowHistory(List.of(getRandom(allSeries),
+                    getRandom(allSeries)));
 
             profileService.createUsingHistory(profile);
         }
@@ -69,9 +65,9 @@ public class GenerateProfiles extends AbstractLogComponent implements CommandLin
         com.acmeflix.domain.Profile profile = new com.acmeflix.domain.Profile();
         profile.setUser(userService.find(1L));
         profile.setName("myprofile2");
-        Long myRandom = (long) ((Math.random() * (maxMovieId - minMovieId)) + minMovieId);
-        Long myRandom1 = (long) ((Math.random() * (maxMovieId - minMovieId)) + minMovieId);
-        profile.setMovieHistory(List.of(myRandom, myRandom1));
+        profile.setTvShowHistory(List.of(getRandom(allSeries)));
+        profile.setMovieHistory(List.of(getRandom(allMovies),
+                getRandom(allMovies)));
 
         profileService.createUsingHistory(profile);
     }

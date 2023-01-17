@@ -9,4 +9,6 @@ public interface TvShowService extends BaseService<TvShow, Long> {
     List<TvShow> findByInitialTvShowName(String initialTvShowName);
 
     TvShow findByTvShowName(String tvShowName);
+
+    List<Long> getAllIds();
 }
