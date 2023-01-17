@@ -8,4 +8,5 @@ import lombok.experimental.SuperBuilder;
 public class MovieResource extends BaseResource {
     String movieName;
     Long id;
+    Float rating;
 }

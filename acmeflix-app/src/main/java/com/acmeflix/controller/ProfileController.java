@@ -6,9 +6,7 @@ import com.acmeflix.domain.enumeration.Category;
 import com.acmeflix.service.BaseService;
 import com.acmeflix.service.ProfileService;
 import com.acmeflix.service.UserService;
-import com.acmeflix.transfer.ApiResponse;
-import com.acmeflix.transfer.BaseWatchedInterface;
-import com.acmeflix.transfer.MovieIdAndWatchedCounter;
+import com.acmeflix.transfer.*;
 import com.acmeflix.transfer.resource.ProfileResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +53,14 @@ public class ProfileController extends BaseController<Profile>{
 
         return ResponseEntity.ok(apiResponse);
     }
+    @GetMapping("/topRatedMovies")
+    public ResponseEntity<ApiResponse<?>> findTopRatedMovies() {
+        var allRated = profileService.findTopRatedMovies(10);
+
+        ApiResponse<List<MovieRatedInterface>> apiResponse = new ApiResponse<>();
+        apiResponse.setData(allRated);
+        return ResponseEntity.ok(apiResponse);
+    }
 
     @GetMapping("/topcategories")
     public ResponseEntity<ApiResponse<?>> findTopCategories() {
@@ -64,7 +70,6 @@ public class ProfileController extends BaseController<Profile>{
 
         ApiResponse<List<Map.Entry<Category, Integer>>> apiResponse = new ApiResponse<>();
         apiResponse.setData(categories);
-
         return ResponseEntity.ok(apiResponse);
     }
 }

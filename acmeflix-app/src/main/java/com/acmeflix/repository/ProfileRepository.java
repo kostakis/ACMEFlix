@@ -3,7 +3,9 @@ package com.acmeflix.repository;
 import com.acmeflix.domain.Profile;
 import com.acmeflix.domain.User;
 import com.acmeflix.transfer.MovieIdAndWatchedCounter;
+import com.acmeflix.transfer.MovieRatedInterface;
 import com.acmeflix.transfer.TvShowIdAndWatchedCounter;
+import com.acmeflix.transfer.TvShowRatedInterface;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -33,4 +35,18 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
                     "    FETCH FIRST :max ROWS ONLY"
     )
     List<TvShowIdAndWatchedCounter> findTopSeries(@Param("max")  int max);
+
+    @Query(nativeQuery = true,
+            value ="SELECT MOVIES.RATING as MovieRating,MOVIES.MOVIENAME as MovieName FROM MOVIES\n" +
+                    "ORDER BY RATING DESC\n" +
+                    "FETCH FIRST :max ROWS ONLY"
+    )
+    List<MovieRatedInterface> findTopRatedMovies(@Param("max")  int max);
+
+    @Query(nativeQuery = true,
+            value = "SELECT TVSHOWS.RATING as TvShowRating,TVSHOWS.TVSHOWNAME as TvShowName FROM TVSHOWS\n" +
+                    "ORDER BY RATING DESC\n" +
+                    "FETCH FIRST :max ROWS ONLY"
+    )
+    List<TvShowRatedInterface> findTopRatedTvShows(@Param("max")  int max);
 }

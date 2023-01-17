@@ -3,9 +3,7 @@ package com.acmeflix.service;
 import com.acmeflix.domain.*;
 import com.acmeflix.domain.enumeration.Category;
 import com.acmeflix.repository.ProfileRepository;
-import com.acmeflix.transfer.BaseWatchedInterface;
-import com.acmeflix.transfer.MovieIdAndWatchedCounter;
-import com.acmeflix.transfer.TvShowIdAndWatchedCounter;
+import com.acmeflix.transfer.*;
 import com.acmeflix.transfer.resource.*;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -145,6 +143,21 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
     @Override
     public List<TvShowIdAndWatchedCounter> findTopSeries(int max) {
         return profileRepository.findTopSeries(max);
+    }
+
+    @Override
+    public List<MovieRatedInterface> findTopRatedMovies(int max) {
+        var movies  = findTopRatedMovies(max);
+        List<MovieRatedInterface> allRated = new ArrayList<>();
+        allRated.addAll(movies);
+        allRated = allRated.stream().sorted().limit(max).toList();
+
+        return allRated;
+    }
+
+    @Override
+    public List<TvShowRatedInterface> findTopRatedTvShows(int max) {
+        return null;
     }
 
     @Override

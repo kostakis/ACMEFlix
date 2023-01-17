@@ -3,10 +3,7 @@ package com.acmeflix.service;
 import com.acmeflix.domain.Profile;
 import com.acmeflix.domain.User;
 import com.acmeflix.domain.enumeration.Category;
-import com.acmeflix.transfer.BaseWatchedInterface;
-import com.acmeflix.transfer.KeyValue;
-import com.acmeflix.transfer.MovieIdAndWatchedCounter;
-import com.acmeflix.transfer.TvShowIdAndWatchedCounter;
+import com.acmeflix.transfer.*;
 import com.acmeflix.transfer.resource.AccountHistory;
 import com.acmeflix.transfer.resource.BaseResource;
 import com.acmeflix.transfer.resource.ProfileResource;
@@ -32,6 +29,9 @@ public interface ProfileService extends BaseService<Profile, Long> {
     List<MovieIdAndWatchedCounter> findTopMovies(int max);
 
     List<TvShowIdAndWatchedCounter> findTopSeries(int max);
+
+    List<MovieRatedInterface> findTopRatedMovies(int max);
+    List<TvShowRatedInterface> findTopRatedTvShows(int max);
 
     List<BaseWatchedInterface> findTopSeriesAndMovies(int max);
 

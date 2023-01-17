@@ -3,6 +3,7 @@ package com.acmeflix.transfer;
 import com.acmeflix.domain.enumeration.Category;
 
 public interface BaseWatchedInterface extends Comparable<BaseWatchedInterface> {
+
     Integer getCounter();
 
     Category getCategory();

@@ -9,4 +9,6 @@ public class TvShowResource extends BaseResource {
     Long id;
 
     String tvShowName;
+
+    Float rating;
 }
