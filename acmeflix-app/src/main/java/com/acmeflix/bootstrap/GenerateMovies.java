@@ -171,7 +171,6 @@ public class GenerateMovies extends AbstractLogComponent implements CommandLineR
                         .movieYear(2022)
                         .duration(156)
                         .rating(6f)
-
                         .build(),
                 Movie.builder().movieName(" Once Upon a Time in Hollywood")
                         .category(Category.DRAMA)
@@ -180,6 +179,30 @@ public class GenerateMovies extends AbstractLogComponent implements CommandLineR
                         .movieYear(2019)
                         .duration(156)
                         .rating(7.6f)
+                        .build(),
+                Movie.builder().movieName("Interstellar")
+                        .category(Category.DRAMA)
+                        .description("A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.")
+                        .movieYear(2014)
+                        .duration(180)
+                        .rating(8.6f)
+                        .build(),
+                Movie.builder().movieName("La vita è bella")
+                        .category(Category.DRAMA)
+                        .description("When an open-minded Jewish waiter and his son become victims of the Holocaust, he uses a perfect" +
+                                " mixture of will, humor, and imagination to protect his son from the dangers around their camp.")
+                        .movieYear(1997)
+                        .duration(126)
+                        .rating(8.8f)
+                        .build(),
+                Movie.builder().movieName("Star Wars: Episode VI - Return of the Jedi")
+                        .category(Category.ACTION)
+                        .description("After a daring mission to rescue Han Solo from Jabba the Hutt, the Rebels dispatch to Endor " +
+                                "to destroy the second Death Star. Meanwhile, Luke struggles to help Darth Vader back from the dark " +
+                                "side without falling into the Emperor's trap.")
+                        .movieYear(1983)
+                        .duration(131)
+                        .rating(9.8f)
                         .build()
         );
 
