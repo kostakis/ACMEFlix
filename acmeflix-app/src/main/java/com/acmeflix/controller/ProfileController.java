@@ -53,12 +53,23 @@ public class ProfileController extends BaseController<Profile>{
 
         return ResponseEntity.ok(apiResponse);
     }
+
     @GetMapping("/topRatedMovies")
     public ResponseEntity<ApiResponse<?>> findTopRatedMovies() {
         var allRated = profileService.findTopRatedMovies(10);
 
         ApiResponse<List<MovieRatedInterface>> apiResponse = new ApiResponse<>();
         apiResponse.setData(allRated);
+        return ResponseEntity.ok(apiResponse);
+    }
+
+    @GetMapping("/topRatedSeries")
+    public ResponseEntity<ApiResponse<?>> findTopTenRatedSeries() {
+        var allRated = profileService.findTopRatedTvShows(10);
+
+        ApiResponse<List<TvShowRatedInterface>> apiResponse = new ApiResponse<>();
+        apiResponse.setData(allRated);
+
         return ResponseEntity.ok(apiResponse);
     }
 

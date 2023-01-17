@@ -37,16 +37,16 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
     List<TvShowIdAndWatchedCounter> findTopSeries(@Param("max")  int max);
 
     @Query(nativeQuery = true,
-            value ="SELECT MOVIES.RATING as MovieRating,MOVIES.MOVIENAME as MovieName FROM MOVIES\n" +
-                    "ORDER BY RATING DESC\n" +
+            value ="SELECT MOVIES.RATING as MovieRating,MOVIES.MOVIENAME as MovieName FROM MOVIES " +
+                    "ORDER BY RATING DESC " +
                     "FETCH FIRST :max ROWS ONLY"
     )
     List<MovieRatedInterface> findTopRatedMovies(@Param("max")  int max);
 
     @Query(nativeQuery = true,
-            value = "SELECT TVSHOWS.RATING as TvShowRating,TVSHOWS.TVSHOWNAME as TvShowName FROM TVSHOWS\n" +
-                    "ORDER BY RATING DESC\n" +
-                    "FETCH FIRST :max ROWS ONLY"
+            value = "SELECT TVSHOWS.RATING as TvShowRating,TVSHOWS.TVSHOWNAME as TvShowName FROM TVSHOWS " +
+                    "ORDER BY RATING DESC " +
+                    "FETCH FIRST :max ROWS ONLY "
     )
     List<TvShowRatedInterface> findTopRatedTvShows(@Param("max")  int max);
 }

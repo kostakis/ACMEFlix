@@ -147,7 +147,7 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
 
     @Override
     public List<MovieRatedInterface> findTopRatedMovies(int max) {
-        var movies  = findTopRatedMovies(max);
+        var movies  = profileRepository.findTopRatedMovies(max);
         List<MovieRatedInterface> allRated = new ArrayList<>();
         allRated.addAll(movies);
         allRated = allRated.stream().sorted().limit(max).toList();
@@ -157,7 +157,13 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
 
     @Override
     public List<TvShowRatedInterface> findTopRatedTvShows(int max) {
-        return null;
+        var series  = profileRepository.findTopRatedTvShows(max);
+        List<TvShowRatedInterface> allRated = new ArrayList<>();
+
+        allRated.addAll(series);
+        allRated = allRated.stream().sorted().limit(max).toList();
+
+        return allRated;
     }
 
     @Override
