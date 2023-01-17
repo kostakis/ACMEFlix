@@ -6,5 +6,4 @@ import com.acmeflix.service.BaseService;
 
 public abstract class BaseController<T extends BaseModel> extends AbstractLogComponent {
     abstract BaseService<T, Long> getBaseService();
-
 }

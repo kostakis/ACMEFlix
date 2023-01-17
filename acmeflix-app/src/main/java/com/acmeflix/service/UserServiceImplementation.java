@@ -5,7 +5,6 @@ import com.acmeflix.domain.User;
 import com.acmeflix.repository.ProfileRepository;
 import com.acmeflix.repository.UserRepository;
 import com.acmeflix.transfer.resource.UserResource;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;

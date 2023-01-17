@@ -10,17 +10,13 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-
 @Component
 @Profile("my-dev")
 @RequiredArgsConstructor
-@Order(2)
-//Made this simple class to make sure domain/services/repository work as expected
-//The rest of the generated data will be created at the import.sql
+@Order(3)
 public class GenerateMovies extends AbstractLogComponent implements CommandLineRunner {
 
     private final MovieService movieService;
-
 
     @Override
     public void run(String... args) throws Exception {

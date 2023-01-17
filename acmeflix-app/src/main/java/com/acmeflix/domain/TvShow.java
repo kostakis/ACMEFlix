@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.util.Pair;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -42,5 +41,4 @@ public class TvShow extends BaseModel {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<TvShowEpisodes> episode = new ArrayList<>(); //NULL
-
 }

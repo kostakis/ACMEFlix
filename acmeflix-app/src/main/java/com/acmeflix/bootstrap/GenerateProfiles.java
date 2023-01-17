@@ -9,7 +9,6 @@ import com.acmeflix.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +19,7 @@ import java.util.Random;
 @Component
 @Profile("my-dev")
 @RequiredArgsConstructor
-@Order(3)
+@Order(4)
 public class GenerateProfiles extends AbstractLogComponent implements CommandLineRunner {
 
     @NotNull

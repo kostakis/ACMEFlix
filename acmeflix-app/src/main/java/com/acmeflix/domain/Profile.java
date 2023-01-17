@@ -2,8 +2,6 @@ package com.acmeflix.domain;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,7 +13,6 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 
 @Data
-//@Builder
 @SuperBuilder
 @Setter
 @Getter

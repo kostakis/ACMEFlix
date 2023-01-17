@@ -10,15 +10,10 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
-
 @Component
 @Profile("my-dev")
 @RequiredArgsConstructor
 @Order(1)
-//Made this simple class to make sure domain/services/repository work as expected
-//The rest of the generated data will be created at the import.sql
 public class GenerateUsers extends AbstractLogComponent implements CommandLineRunner {
 
     private final UserService userService;

@@ -23,7 +23,7 @@ public class MovieServiceImplementation extends BaseServiceImpl<Movie>
     @Override
     public List<Movie> findByInitialMovieName(String initialMovieName) {
 
-        List<Movie> movieList =  movieRepository.findBymovieNameStartingWith(initialMovieName);
+        List<Movie> movieList =  movieRepository.findBymovieNameStartingWithIgnoreCase(initialMovieName);
         return movieList;
     }
 

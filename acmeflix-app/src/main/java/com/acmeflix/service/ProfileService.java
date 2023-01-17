@@ -31,6 +31,7 @@ public interface ProfileService extends BaseService<Profile, Long> {
     List<TvShowIdAndWatchedCounter> findTopSeries(int max);
 
     List<MovieRatedInterface> findTopRatedMovies(int max);
+    
     List<TvShowRatedInterface> findTopRatedTvShows(int max);
 
     List<BaseWatchedInterface> findTopSeriesAndMovies(int max);
