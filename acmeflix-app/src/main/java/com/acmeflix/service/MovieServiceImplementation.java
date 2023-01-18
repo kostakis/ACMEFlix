@@ -55,6 +55,7 @@ public class MovieServiceImplementation extends BaseServiceImpl<Movie>
         for(Movie movie1: movies) {
             movieResources.add(MovieResource.builder()
                     .movieName(movie1.getMovieName())
+                    .id(movie1.getId())
                     .description(movie1.getDescription())
                     .movieYear(movie1.getMovieYear())
                     .category(movie1.getCategory())

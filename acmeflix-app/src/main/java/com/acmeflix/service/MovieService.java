@@ -14,5 +14,6 @@ public interface MovieService extends BaseService<Movie, Long> {
     Movie findByMovieName(String movieName);
 
     List<Long> getAllIds();
+
     List<MovieResource> toMovieResource(List<Movie> movies);
 }

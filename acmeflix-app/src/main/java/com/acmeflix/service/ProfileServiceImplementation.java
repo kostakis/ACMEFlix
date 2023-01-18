@@ -150,6 +150,7 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
         var movies  = profileRepository.findTopRatedMovies(max);
         List<MovieRatedInterface> allRated = new ArrayList<>();
         allRated.addAll(movies);
+
         allRated = allRated.stream().sorted().limit(max).toList();
 
         return allRated;
