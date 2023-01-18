@@ -23,39 +23,11 @@ public class DbControllerBackUp extends AbstractLogComponent {
 
     //@Scheduled(cron = "0 0 0/24 * * ?") //Every 24 hours
     //@Scheduled(cron = "0 0/1 * * * ?") //Every min for example
-    @Scheduled(cron = "0/20 * * * * ?") //Every 10sec for example
-    public void backupUsers() throws IOException {
+    @Scheduled(cron = "0/20 * * * * ?") //Every 20sec for example
+    public void backupUsers() {
         Date date = new Date();
         logger.trace("Starting backup of DB: {}", date);
 
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-        String backupDateStr = format.format(date);
-
-        String rootPath = new File("").getAbsolutePath() + File.separator + "logs/";
-        String fileName = "DB_BACK_UP_" + backupDateStr;
-
-        String table1 = "USERS"; //Make sure to include all the tables
-        String table2 = "MOVIES"; //Make sure to include all the tables
-        String table3 = "TVSHOWS"; //Make sure to include all the tables
-        String table4 = "PROFILES"; //Make sure to include all the tables
-        String table5 = "PROFILE_MOVIEHISTORY"; //Make sure to include all the tables
-        String table6 = "PROFILE_TVSHOWHISTORY"; //Make sure to include all the tables
-        String table7 = "TVSHOWEPISODES"; //Make sure to include all the tables
-        String table8 = "TVSHOWS_EPISODE"; //Make sure to include all the tables
-
-
-        //Maybe try to use mysqldump, although the user must have installed it on his pc
-
-//        File file = new File(rootPath + fileName);
-//        file.createNewFile();
-//
-//        FileWriter f = new FileWriter(file);
-//
-//
-//        var a = userRepository.findAll();
-//
-//        f.write(a.toString());
-//        f.flush();
-//        f.close();
+        //TODO if we have time
     }
 }
