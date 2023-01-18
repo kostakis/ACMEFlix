@@ -1,7 +1,10 @@
 package com.acmeflix.service;
 
 import com.acmeflix.domain.Movie;
+import com.acmeflix.domain.User;
 import com.acmeflix.repository.MovieRepository;
+import com.acmeflix.transfer.resource.MovieResource;
+import com.acmeflix.transfer.resource.UserResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -43,6 +46,24 @@ public class MovieServiceImplementation extends BaseServiceImpl<Movie>
         }
 
         return allIds;
+    }
+
+    @Override
+    public List<MovieResource> toMovieResource(List<Movie> movies) {
+        List<MovieResource> movieResources = new ArrayList<>();
+
+        for(Movie movie1: movies) {
+            movieResources.add(MovieResource.builder()
+                    .movieName(movie1.getMovieName())
+                    .description(movie1.getDescription())
+                    .movieYear(movie1.getMovieYear())
+                    .category(movie1.getCategory())
+                    .rating(movie1.getRating())
+                    .duration(movie1.getDuration())
+                    .build());
+        }
+
+        return movieResources;
     }
 
 }

@@ -34,7 +34,14 @@ public class DbControllerBackUp extends AbstractLogComponent {
         String rootPath = new File("").getAbsolutePath() + File.separator + "logs/";
         String fileName = "DB_BACK_UP_" + backupDateStr;
 
-        String tables = "USERS"; //Make sure to include all the tables
+        String table1 = "USERS"; //Make sure to include all the tables
+        String table2 = "MOVIES"; //Make sure to include all the tables
+        String table3 = "TVSHOWS"; //Make sure to include all the tables
+        String table4 = "PROFILES"; //Make sure to include all the tables
+        String table5 = "PROFILE_MOVIEHISTORY"; //Make sure to include all the tables
+        String table6 = "PROFILE_TVSHOWHISTORY"; //Make sure to include all the tables
+        String table7 = "TVSHOWEPISODES"; //Make sure to include all the tables
+        String table8 = "TVSHOWS_EPISODE"; //Make sure to include all the tables
 
 
         //Maybe try to use mysqldump, although the user must have installed it on his pc
