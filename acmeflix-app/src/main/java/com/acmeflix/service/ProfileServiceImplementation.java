@@ -86,12 +86,12 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
             List<ProfileResourceWithHistory> userProfiles = new ArrayList<>();
 
             for (Profile profile : profiles) { //For each profile of each user
-                List<MovieResource> movieResources = new ArrayList<>();
-                List<TvShowResource> tvShowResources = new ArrayList<>();
+                List<MovieResourceHistoryResource> movieResources = new ArrayList<>();
+                List<TvShowHistoryResource> tvShowResources = new ArrayList<>();
 
                 var watchedMovies = profile.getMovieHistory();
                 for (Long movie : watchedMovies) { //Get all the watched movies
-                    movieResources.add(MovieResource.builder()
+                    movieResources.add(MovieResourceHistoryResource.builder()
                             .movieName(movieService.get(movie).getMovieName())
                             .id(movie)
                             .build());
@@ -99,7 +99,7 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
 
                 var watchedShows = profile.getTvShowHistory();
                 for (Long showId : watchedShows) { //Get all the watched tv shows
-                    tvShowResources.add(TvShowResource.builder()
+                    tvShowResources.add(TvShowHistoryResource.builder()
                             .tvShowName(tvShowService.get(showId).getTvShowName())
                             .id(showId)
                             .build());
@@ -115,7 +115,7 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
             }
 
             accountHistoryList.add(AccountHistory.builder()
-                    .user(user)
+                    .user(userService.toUserResource(user))
                     .profiles(userProfiles)
                     .build());
         }

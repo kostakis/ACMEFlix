@@ -44,7 +44,7 @@ public class GenerateProfiles extends AbstractLogComponent implements CommandLin
         var allMovies = movieService.getAllIds();
         var allSeries = tvShowService.getAllIds();
 
-        //Creating profiles for each users
+        //Creating 2 profiles for each user
         for(User user: allusers) {
             com.acmeflix.domain.Profile profile = new com.acmeflix.domain.Profile();
             profile.setUser(user);
@@ -58,16 +58,20 @@ public class GenerateProfiles extends AbstractLogComponent implements CommandLin
                     getRandom(allSeries)));
 
             profileService.createUsingHistory(profile);
+
+
+            com.acmeflix.domain.Profile profile2 = new com.acmeflix.domain.Profile();
+            profile2.setUser(user);
+            profile2.setName("myprofile2");
+
+            profile2.setMovieHistory(List.of(getRandom(allMovies),
+                    getRandom(allMovies),
+                    getRandom(allMovies)));
+
+            profile2.setTvShowHistory(List.of(getRandom(allSeries),
+                    getRandom(allSeries)));
+
+            profileService.createUsingHistory(profile2);
         }
-
-        //Second profile
-        com.acmeflix.domain.Profile profile = new com.acmeflix.domain.Profile();
-        profile.setUser(userService.find(1L));
-        profile.setName("myprofile2");
-        profile.setTvShowHistory(List.of(getRandom(allSeries)));
-        profile.setMovieHistory(List.of(getRandom(allMovies),
-                getRandom(allMovies)));
-
-        profileService.createUsingHistory(profile);
     }
 }

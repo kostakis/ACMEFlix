@@ -72,6 +72,16 @@ public class UserServiceImplementation extends BaseServiceImpl<User>
     }
 
     @Override
+    public UserResource toUserResource(User user) {
+        return UserResource.builder()
+                 .firstName(user.getFirstName())
+                 .lastName(user.getLastName())
+                 .id(user.getId())
+                 .email(user.getEmail())
+                 .build();
+    }
+
+    @Override
     public void deleteById(final Long id) {
         logger.trace("Deleting entity with id {}.", id);
 

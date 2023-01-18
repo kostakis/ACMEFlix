@@ -32,10 +32,9 @@ public class SearchController extends AbstractLogComponent  {
         var tvShowList = tvShowService.findByInitialTvShowName(initialName);
         logger.info("TvShow list is: {}", tvShowList);
 
-        ApiResponse<List<BaseModel>> apiResponse = new ApiResponse<List<BaseModel>>();
-        apiResponse.setData(Stream.concat(movieList.stream(), tvShowList.stream()).toList());
-
-        return ResponseEntity.ok(apiResponse);
+        return ResponseEntity.ok(ApiResponse.<List<BaseModel>>builder()
+                .data(Stream.concat(movieList.stream(), tvShowList.stream()).toList())
+                .build());
     }
 
 }

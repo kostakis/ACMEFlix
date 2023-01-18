@@ -23,10 +23,11 @@ public class GlobalExcpetionHandler extends AbstractLogComponent {
         apiError.setMessage(ex.getMessage());
         apiError.setPath(webRequest.getDescription(false));
 
-        ApiResponse<String> apiResponse = new ApiResponse<>();
-        apiResponse.setApiError(apiError);
 
-        return new ResponseEntity<ApiResponse<String>>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(ApiResponse.<String>builder()
+                .apiError(apiError)
+                .build(), HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
 
     @ExceptionHandler(NoSuchElementException.class)
@@ -39,10 +40,10 @@ public class GlobalExcpetionHandler extends AbstractLogComponent {
         apiError.setMessage(ex.getMessage());
         apiError.setPath(webRequest.getDescription(false));
 
-        ApiResponse<String> apiResponse = new ApiResponse<>();
-        apiResponse.setApiError(apiError);
 
-        return new ResponseEntity<ApiResponse<String>>(apiResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity(ApiResponse.<String>builder()
+                .apiError(apiError)
+                .build(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -55,10 +56,9 @@ public class GlobalExcpetionHandler extends AbstractLogComponent {
         apiError.setMessage(ex.getMessage());
         apiError.setPath(webRequest.getDescription(false));
 
-        ApiResponse<String> apiResponse = new ApiResponse<>();
-        apiResponse.setApiError(apiError);
-
-        return new ResponseEntity<ApiResponse<String>>(apiResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(ApiResponse.<String>builder()
+                .apiError(apiError)
+                .build(), HttpStatus.BAD_REQUEST);
     }
 
 }

@@ -16,6 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 public class AccountHistory extends BaseResource {
 
-    private User user;
+    private UserResource user;
     private List<ProfileResourceWithHistory> profiles;
 }
