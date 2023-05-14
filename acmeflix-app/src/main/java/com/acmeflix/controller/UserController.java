@@ -119,7 +119,7 @@ public class UserController extends BaseController<User> {
                 .build());
     }
 
-    @PostMapping(value = "/update/{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<?> updateExistingUser(@PathVariable Long id,
                                                 @RequestParam("email") Optional<String> email,
                                                 @RequestParam("firstname") Optional<String> firstname,

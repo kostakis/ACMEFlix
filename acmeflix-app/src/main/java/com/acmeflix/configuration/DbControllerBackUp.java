@@ -1,4 +1,4 @@
-package com.acmeflix.Configuration;
+package com.acmeflix.configuration;
 
 import com.acmeflix.base.AbstractLogComponent;
 import com.acmeflix.repository.UserRepository;
@@ -21,8 +21,7 @@ public class DbControllerBackUp extends AbstractLogComponent {
     @Scheduled(cron = "0/20 * * * * ?") //Every 20sec for example
     public void backupUsers() {
         Date date = new Date();
-        logger.trace("Starting backup of DB: {}", date);
-
-        //TODO if we have time
+        //logger.trace("Starting backup of DB: {}", date);
+        //TODO
     }
 }

@@ -42,14 +42,13 @@ public class UserServiceImplementation extends BaseServiceImpl<User>
         for (User user : e) {
             allIds.add(user.getId());
         }
-
         return allIds;
     }
 
     @Override
     public void update(Long id, Optional<String> email, Optional<String> firstname, Optional<String> lastname, Optional<String> password) {
         User user = find(id); //Will throw if not found
-
+        
         email.ifPresent(user::setEmail);
         firstname.ifPresent(user::setFirstName);
         lastname.ifPresent(user::setLastName);
