@@ -22,7 +22,7 @@ public class TvShowServiceImplementation extends BaseServiceImpl<TvShow>
 
     @Override
     public List<TvShow> findByInitialTvShowName(String initialTvShowName) {
-        List<TvShow> tvShowList =  tvshowRepository.findBytvShowNameStartingWith(initialTvShowName);
+        List<TvShow> tvShowList = tvshowRepository.findBytvShowNameStartingWith(initialTvShowName);
         return tvShowList;
     }
 
@@ -36,7 +36,7 @@ public class TvShowServiceImplementation extends BaseServiceImpl<TvShow>
         List<Long> ids = new ArrayList<>();
         var all = findAll();
 
-        for(TvShow show: all) {
+        for (TvShow show : all) {
             ids.add(show.getId());
         }
 

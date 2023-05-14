@@ -23,7 +23,7 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
                     "GROUP BY MOVIEHISTORY ORDER BY COUNTER DESC " +
                     "FETCH FIRST :max ROWS ONLY"
     )
-    List<MovieIdAndWatchedCounter> findTopMovies(@Param("max")  int max);
+    List<MovieIdAndWatchedCounter> findTopMovies(@Param("max") int max);
 
 
     @Query(nativeQuery = true,
@@ -34,19 +34,19 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
                     "    GROUP BY TVSHOWHISTORY ORDER BY COUNTER DESC" +
                     "    FETCH FIRST :max ROWS ONLY"
     )
-    List<TvShowIdAndWatchedCounter> findTopSeries(@Param("max")  int max);
+    List<TvShowIdAndWatchedCounter> findTopSeries(@Param("max") int max);
 
     @Query(nativeQuery = true,
-            value ="SELECT MOVIES.RATING as MovieRating,MOVIES.MOVIENAME as MovieName FROM MOVIES " +
+            value = "SELECT MOVIES.RATING as MovieRating,MOVIES.MOVIENAME as MovieName FROM MOVIES " +
                     "ORDER BY RATING DESC " +
                     "FETCH FIRST :max ROWS ONLY"
     )
-    List<MovieRatedInterface> findTopRatedMovies(@Param("max")  int max);
+    List<MovieRatedInterface> findTopRatedMovies(@Param("max") int max);
 
     @Query(nativeQuery = true,
             value = "SELECT TVSHOWS.RATING as TvShowRating,TVSHOWS.TVSHOWNAME as TvShowName FROM TVSHOWS " +
                     "ORDER BY RATING DESC " +
                     "FETCH FIRST :max ROWS ONLY "
     )
-    List<TvShowRatedInterface> findTopRatedTvShows(@Param("max")  int max);
+    List<TvShowRatedInterface> findTopRatedTvShows(@Param("max") int max);
 }

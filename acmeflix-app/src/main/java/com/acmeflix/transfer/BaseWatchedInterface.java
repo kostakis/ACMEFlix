@@ -9,7 +9,7 @@ public interface BaseWatchedInterface extends Comparable<BaseWatchedInterface> {
     Category getCategory();
 
     @Override
-    public default int compareTo(BaseWatchedInterface a) {
+    default int compareTo(BaseWatchedInterface a) {
         return a.getCounter() - this.getCounter();
     }
 }

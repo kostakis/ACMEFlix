@@ -205,8 +205,5 @@ public class GenerateMovies extends AbstractLogComponent implements CommandLineR
                         .rating(9.8f)
                         .build()
         );
-
-
-
     }
 }

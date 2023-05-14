@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public abstract  class BaseServiceImpl<T extends BaseModel>
+public abstract class BaseServiceImpl<T extends BaseModel>
         extends AbstractLogComponent
         implements BaseService<T, Long> {
 
     abstract JpaRepository<T, Long> getRepository(); //Will be implemented by each service to get the relevant service
 
     @Override
-    public T create(final T element) { //Simle insertion to the DB of an entity, a new record
+    public T create(final T element) { //Simple insertion to the DB of an entity, a new record
         logger.trace("Creating {}.", element);
         return getRepository().save(element);
     }
@@ -57,15 +57,12 @@ public abstract  class BaseServiceImpl<T extends BaseModel>
     @Override
     public void deleteById(final Long id) {
         logger.trace("Deleting entity with id {}.", id);
-        if (exists(id))
-        {
+        if (exists(id)) {
             getRepository().deleteById(id);
             logger.info("User with id: {} deleted", id);
+        } else {
+            throw new NoSuchElementException("Id: " + id + " you are tyring to delete does not exist");
         }
-        else
-        {
-			throw new NoSuchElementException("Id: " + id + " you are tyring to delete does not exist");
-		}
     }
 
     @Override

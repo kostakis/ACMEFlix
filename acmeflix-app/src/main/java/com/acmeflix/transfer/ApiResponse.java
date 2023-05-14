@@ -1,7 +1,9 @@
 package com.acmeflix.transfer;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.Value;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;

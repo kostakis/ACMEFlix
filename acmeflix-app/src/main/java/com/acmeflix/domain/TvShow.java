@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 @Entity
 @SuperBuilder
-@Table( name = "TVSHOWS", indexes = {@Index(columnList = "TVSHOWNAME")})
+@Table(name = "TVSHOWS", indexes = {@Index(columnList = "TVSHOWNAME")})
 @NoArgsConstructor
 @AllArgsConstructor
 @SequenceGenerator(name = "idGenerator", initialValue = 1, allocationSize = 1)
@@ -32,10 +32,10 @@ public class TvShow extends BaseModel {
     private Category category;
 
     @NotNull
-    @Column (nullable = false)
+    @Column(nullable = false)
     private Float rating;
 
-    @NotNull( message = "Tv show year can not be null")
+    @NotNull(message = "Tv show year can not be null")
     @Column(nullable = false)
     private Integer tvShowYear;
 

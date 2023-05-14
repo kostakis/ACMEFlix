@@ -1,7 +1,9 @@
 package com.acmeflix.transfer.resource;
 
 
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;

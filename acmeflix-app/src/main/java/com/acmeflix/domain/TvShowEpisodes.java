@@ -26,6 +26,6 @@ public class TvShowEpisodes extends BaseModel {
     private Integer episode;
 
     @NotNull
-    @Column (nullable = false)
+    @Column(nullable = false)
     private Integer duration; //Minutes
 }

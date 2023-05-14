@@ -3,8 +3,8 @@ package com.acmeflix.bootstrap;
 import com.acmeflix.base.AbstractLogComponent;
 import com.acmeflix.domain.TvShow;
 import com.acmeflix.domain.TvShowEpisodes;
-import com.acmeflix.service.TvShowService;
 import com.acmeflix.domain.enumeration.Category;
+import com.acmeflix.service.TvShowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -23,13 +23,12 @@ public class GenerateTvShows extends AbstractLogComponent implements CommandLine
 
     @Override
     public void run(String... args) throws Exception {
-        logger.info("Run from GenerateTvShows");
+        logger.info("Generating tv shows");
 
         TvShowEpisodes tvShowEpisodes = new TvShowEpisodes();
         tvShowEpisodes.setEpisode(1);
         tvShowEpisodes.setSeason(1);
         tvShowEpisodes.setDuration(123);
-
 
         TvShowEpisodes tvShowEpisodes2 = new TvShowEpisodes();
         tvShowEpisodes2.setEpisode(2);
@@ -492,26 +491,23 @@ public class GenerateTvShows extends AbstractLogComponent implements CommandLine
         tvShow15.setCategory(Category.HORROR);
         tvShow15.setRating(6.1f);
 
+        tvShow.setEpisode(List.of(tvShowEpisodes, tvShowEpisodes2, tvShowEpisodes3, tvShowEpisodes4, tvShowEpisodes5));
+        tvShow2.setEpisode(List.of(tvShowEpisodes6, tvShowEpisodes7, tvShowEpisodes8, tvShowEpisodes9));
+        tvShow3.setEpisode(List.of(tvShowEpisodes10, tvShowEpisodes11, tvShowEpisodes12));
+        tvShow4.setEpisode(List.of(tvShowEpisodes13, tvShowEpisodes14, tvShowEpisodes16, tvShowEpisodes17, tvShowEpisodes18, tvShowEpisodes19));
+        tvShow5.setEpisode(List.of(tvShowEpisodes21, tvShowEpisodes22, tvShowEpisodes23, tvShowEpisodes24, tvShowEpisodes25));
+        tvShow6.setEpisode(List.of(tvShowEpisodes28, tvShowEpisodes29, tvShowEpisodes30, tvShowEpisodes31, tvShowEpisodes34));
+        tvShow7.setEpisode(List.of(tvShowEpisodes44, tvShowEpisodes45, tvShowEpisodes46, tvShowEpisodes47, tvShowEpisodes48));
+        tvShow8.setEpisode(List.of(tvShowEpisodes49, tvShowEpisodes50, tvShowEpisodes51, tvShowEpisodes52, tvShowEpisodes53));
+        tvShow9.setEpisode(List.of(tvShowEpisodes54, tvShowEpisodes55, tvShowEpisodes56, tvShowEpisodes57, tvShowEpisodes58));
+        tvShow10.setEpisode(List.of(tvShowEpisodes59, tvShowEpisodes60, tvShowEpisodes61, tvShowEpisodes62, tvShowEpisodes63));
+        tvShow11.setEpisode(List.of(tvShowEpisodes64, tvShowEpisodes65, tvShowEpisodes66, tvShowEpisodes67, tvShowEpisodes68));
+        tvShow12.setEpisode(List.of(tvShowEpisodes69, tvShowEpisodes70, tvShowEpisode74, tvShowEpisodes72, tvShowEpisodes73));
+        tvShow13.setEpisode(List.of(tvShowEpisodes75, tvShowEpisodes76, tvShowEpisode77, tvShowEpisodes78, tvShowEpisodes79));
+        tvShow14.setEpisode(List.of(tvShowEpisodes80, tvShowEpisodes81, tvShowEpisode82, tvShowEpisodes83, tvShowEpisodes84));
+        tvShow15.setEpisode(List.of(tvShowEpisodes85, tvShowEpisodes86, tvShowEpisode87, tvShowEpisodes88, tvShowEpisodes89));
 
-
-        tvShow.setEpisode(List.of(tvShowEpisodes,tvShowEpisodes2,tvShowEpisodes3,tvShowEpisodes4,tvShowEpisodes5));
-        tvShow2.setEpisode(List.of(tvShowEpisodes6,tvShowEpisodes7,tvShowEpisodes8,tvShowEpisodes9));
-        tvShow3.setEpisode(List.of(tvShowEpisodes10,tvShowEpisodes11,tvShowEpisodes12));
-        tvShow4.setEpisode(List.of(tvShowEpisodes13,tvShowEpisodes14,tvShowEpisodes16,tvShowEpisodes17,tvShowEpisodes18,tvShowEpisodes19));
-        tvShow5.setEpisode(List.of(tvShowEpisodes21,tvShowEpisodes22,tvShowEpisodes23,tvShowEpisodes24,tvShowEpisodes25));
-        tvShow6.setEpisode(List.of(tvShowEpisodes28,tvShowEpisodes29,tvShowEpisodes30,tvShowEpisodes31,tvShowEpisodes34));
-        tvShow7.setEpisode(List.of(tvShowEpisodes44,tvShowEpisodes45,tvShowEpisodes46,tvShowEpisodes47,tvShowEpisodes48));
-        tvShow8.setEpisode(List.of(tvShowEpisodes49,tvShowEpisodes50,tvShowEpisodes51,tvShowEpisodes52,tvShowEpisodes53));
-        tvShow9.setEpisode(List.of(tvShowEpisodes54,tvShowEpisodes55,tvShowEpisodes56,tvShowEpisodes57,tvShowEpisodes58));
-        tvShow10.setEpisode(List.of(tvShowEpisodes59,tvShowEpisodes60,tvShowEpisodes61,tvShowEpisodes62,tvShowEpisodes63));
-        tvShow11.setEpisode(List.of(tvShowEpisodes64,tvShowEpisodes65,tvShowEpisodes66,tvShowEpisodes67,tvShowEpisodes68));
-        tvShow12.setEpisode(List.of(tvShowEpisodes69,tvShowEpisodes70,tvShowEpisode74,tvShowEpisodes72,tvShowEpisodes73));
-        tvShow13.setEpisode(List.of(tvShowEpisodes75,tvShowEpisodes76,tvShowEpisode77,tvShowEpisodes78,tvShowEpisodes79));
-        tvShow14.setEpisode(List.of(tvShowEpisodes80,tvShowEpisodes81,tvShowEpisode82,tvShowEpisodes83,tvShowEpisodes84));
-        tvShow15.setEpisode(List.of(tvShowEpisodes85,tvShowEpisodes86,tvShowEpisode87,tvShowEpisodes88,tvShowEpisodes89));
-
-
-        tvShowService.createAll(List.of(tvShow,tvShow2,tvShow3, tvShow4, tvShow5, tvShow6,tvShow7, tvShow8, tvShow9, tvShow10,
-                tvShow11, tvShow12, tvShow13,tvShow14,tvShow15));
+        tvShowService.createAll(List.of(tvShow, tvShow2, tvShow3, tvShow4, tvShow5, tvShow6, tvShow7, tvShow8, tvShow9, tvShow10,
+                tvShow11, tvShow12, tvShow13, tvShow14, tvShow15));
     }
 }

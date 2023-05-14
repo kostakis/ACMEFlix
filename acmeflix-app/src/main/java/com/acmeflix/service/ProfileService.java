@@ -5,14 +5,10 @@ import com.acmeflix.domain.User;
 import com.acmeflix.domain.enumeration.Category;
 import com.acmeflix.transfer.*;
 import com.acmeflix.transfer.resource.AccountHistory;
-import com.acmeflix.transfer.resource.BaseResource;
 import com.acmeflix.transfer.resource.ProfileResource;
-import lombok.NonNull;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public interface ProfileService extends BaseService<Profile, Long> {
 
@@ -31,7 +27,7 @@ public interface ProfileService extends BaseService<Profile, Long> {
     List<TvShowIdAndWatchedCounter> findTopSeries(int max);
 
     List<MovieRatedInterface> findTopRatedMovies(int max);
-    
+
     List<TvShowRatedInterface> findTopRatedTvShows(int max);
 
     List<BaseWatchedInterface> findTopSeriesAndMovies(int max);

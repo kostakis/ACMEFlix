@@ -7,20 +7,23 @@ import com.acmeflix.transfer.ApiResponse;
 import com.acmeflix.transfer.resource.MovieResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "movies")
-public class MovieController extends BaseController<Movie>{
+public class MovieController extends BaseController<Movie> {
     private final MovieService movieService;
+
     @Override
     BaseService<Movie, Long> getBaseService() {
         return movieService;
     }
+
     @GetMapping
     public ResponseEntity<?> findAll() {
         logger.info("GET request movies/");

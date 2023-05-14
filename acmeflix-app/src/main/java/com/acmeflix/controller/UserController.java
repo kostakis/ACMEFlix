@@ -13,7 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -67,7 +68,7 @@ public class UserController extends BaseController<User> {
         List<Profile> allProfiles = profileService.findByUser(user);
 
         //Bad design should have mapper.....
-        List<ProfileResource> profileHoursResources =  profileService.toProfileResource(allProfiles);
+        List<ProfileResource> profileHoursResources = profileService.toProfileResource(allProfiles);
         return ResponseEntity.ok(ApiResponse.<List<ProfileResource>>builder()
                 .data(profileHoursResources)
                 .build());
@@ -113,8 +114,8 @@ public class UserController extends BaseController<User> {
 
         userService.deleteById(id);
 
-        return ResponseEntity.ok( ApiResponse.<String>builder()
-                .data("Deletion of user with id: " + id +" was successfull")
+        return ResponseEntity.ok(ApiResponse.<String>builder()
+                .data("Deletion of user with id: " + id + " was successfull")
                 .build());
     }
 
@@ -123,8 +124,7 @@ public class UserController extends BaseController<User> {
                                                 @RequestParam("email") Optional<String> email,
                                                 @RequestParam("firstname") Optional<String> firstname,
                                                 @RequestParam("lastname") Optional<String> lastname,
-                                                @RequestParam("password") Optional<String> password)
-    {
+                                                @RequestParam("password") Optional<String> password) {
         userService.update(id, email, firstname, lastname, password);
         return ResponseEntity.ok("User Updated");
     }

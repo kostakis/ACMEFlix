@@ -18,13 +18,13 @@ import java.util.stream.Stream;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "search")
-public class SearchController extends AbstractLogComponent  {
+public class SearchController extends AbstractLogComponent {
     private final MovieService movieService;
     private final TvShowService tvShowService;
 
     @GetMapping(params = {"name"})
     public ResponseEntity<ApiResponse<?>> findMovieByInitialName(@RequestParam("name") String initialName) {
-        logger.info( "Received name: {}", initialName);
+        logger.info("Received name: {}", initialName);
 
         var movieList = movieService.findByInitialMovieName(initialName);
         logger.info("Movie list is: {}", movieList);

@@ -1,10 +1,7 @@
 package com.acmeflix.service;
 
-import com.acmeflix.domain.Profile;
 import com.acmeflix.domain.User;
 import com.acmeflix.transfer.resource.UserResource;
-import org.mapstruct.control.MappingControl;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -16,11 +13,13 @@ public interface UserService extends BaseService<User, Long> {
     List<Long> getAllIds();
 
     void update(Long id, @RequestParam("email") Optional<String> email,
-                         @RequestParam("firstname") Optional<String> firstname,
-                         @RequestParam("lastname") Optional<String> lastname,
-                         @RequestParam("password") Optional<String> password);
+                @RequestParam("firstname") Optional<String> firstname,
+                @RequestParam("lastname") Optional<String> lastname,
+                @RequestParam("password") Optional<String> password);
 
+    // From User list to user resource list
     List<UserResource> toUserResource(List<User> users);
 
+    // From user to user resource
     UserResource toUserResource(User user);
-    }
+}

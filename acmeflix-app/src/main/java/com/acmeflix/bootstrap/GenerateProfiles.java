@@ -19,7 +19,7 @@ import java.util.Random;
 @Component
 @Profile("my-dev")
 @RequiredArgsConstructor
-@Order(4)
+@Order(4) // Last since we must have users, movies, shows and then create the profiles
 public class GenerateProfiles extends AbstractLogComponent implements CommandLineRunner {
 
     @NotNull
@@ -40,37 +40,30 @@ public class GenerateProfiles extends AbstractLogComponent implements CommandLin
     @Override
     public void run(String... args) throws Exception {
         var allusers = userService.findAll();
-
         var allMovies = movieService.getAllIds();
         var allSeries = tvShowService.getAllIds();
 
-        //Creating 2 profiles for each user
-        for(User user: allusers) {
+        for (User user : allusers) {
+            //Creating 2 profiles for each user
             com.acmeflix.domain.Profile profile = new com.acmeflix.domain.Profile();
+            com.acmeflix.domain.Profile profile2 = new com.acmeflix.domain.Profile();
+
             profile.setUser(user);
             profile.setName("myprofile1");
-
             profile.setMovieHistory(List.of(getRandom(allMovies),
-                                            getRandom(allMovies),
-                                            getRandom(allMovies)));
-
+                    getRandom(allMovies),
+                    getRandom(allMovies)));
             profile.setTvShowHistory(List.of(getRandom(allSeries),
                     getRandom(allSeries)));
-
             profileService.createUsingHistory(profile);
 
-
-            com.acmeflix.domain.Profile profile2 = new com.acmeflix.domain.Profile();
             profile2.setUser(user);
             profile2.setName("myprofile2");
-
             profile2.setMovieHistory(List.of(getRandom(allMovies),
                     getRandom(allMovies),
                     getRandom(allMovies)));
-
             profile2.setTvShowHistory(List.of(getRandom(allSeries),
                     getRandom(allSeries)));
-
             profileService.createUsingHistory(profile2);
         }
     }

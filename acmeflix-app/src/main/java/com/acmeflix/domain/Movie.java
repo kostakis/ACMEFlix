@@ -14,14 +14,14 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Entity
 @SuperBuilder
-@Table( name = "MOVIES", indexes = {@Index(columnList = "MOVIENAME")})
+@Table(name = "MOVIES", indexes = {@Index(columnList = "MOVIENAME")})
 @NoArgsConstructor
 @AllArgsConstructor
 @SequenceGenerator(name = "idGenerator", initialValue = 1, allocationSize = 1)
 public class Movie extends BaseModel {
 
-    @NotNull ( message = "Movie name can not be null")
-    @Column (name = "MOVIENAME", length = 50, nullable = false)
+    @NotNull(message = "Movie name can not be null")
+    @Column(name = "MOVIENAME", length = 50, nullable = false)
     private String movieName;
 
     @NotNull(message = "Movie category cannot be null")
@@ -35,14 +35,14 @@ public class Movie extends BaseModel {
     private String description;
 
     @NotNull
-    @Column (nullable = false)
+    @Column(nullable = false)
     private Integer movieYear;
 
     @NotNull
-    @Column (nullable = false)
+    @Column(nullable = false)
     private Integer duration; //Minutes
 
     @NotNull
-    @Column (nullable = false)
+    @Column(nullable = false)
     private Float rating;
 }

@@ -23,7 +23,6 @@ public class GlobalExcpetionHandler extends AbstractLogComponent {
         apiError.setMessage(ex.getMessage());
         apiError.setPath(webRequest.getDescription(false));
 
-
         return new ResponseEntity(ApiResponse.<String>builder()
                 .apiError(apiError)
                 .build(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -60,5 +59,4 @@ public class GlobalExcpetionHandler extends AbstractLogComponent {
                 .apiError(apiError)
                 .build(), HttpStatus.BAD_REQUEST);
     }
-
 }

@@ -7,6 +7,5 @@ import lombok.experimental.SuperBuilder;
 @Data
 public class TvShowHistoryResource extends BaseResource {
     Long id;
-
     String tvShowName;
 }
