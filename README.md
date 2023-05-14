@@ -54,3 +54,13 @@ collection of entities. You can interact with the API using tools such as curl o
 * PUT users/{id}: Updates the user.
   
 There are more endpoints but the above are the basics
+
+## Databases
+
+You can view the databases using this link: http://localhost:8081/h2-console/  
+
+Credentials:  
+username: sa  
+password: sa  
+
+They are defined here: [GenerateProfiles](acmeflix-app/src/main/resources/application.yml)  
