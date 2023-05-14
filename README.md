@@ -1,6 +1,7 @@
 # ACMEFlix application
 
-A simple movie application that demonstrates how to build a RESTful  API using Spring Boot.
+A simple movie application that demonstrates how to build a RESTful  API using Spring Boot.  
+It was created in the scope of [project future](https://www.projectfuture.gr/).  
 
 # Technologies Used
 * Spring Boot
@@ -16,7 +17,7 @@ You can think of it as a clone of Netflix.
 We have set movies and TV shows, that are generated(statically) at the startup of the app and they
 are stored in our databases.  
 We also have users and each user has multiple profiles showing their history.  
-The profile history of each user is created randomly in the startup of the application, [GenerateProfiles](acmeflix-app/src/main/java/com/acmeflix/bootstrap/GenerateProfiles.java)  
+The profile history of each user is created randomly in the startup of the application, [GenerateProfiles.java](acmeflix-app/src/main/java/com/acmeflix/bootstrap/GenerateProfiles.java)  
 All databases are embedded in the application using H2.
 
 # How to run
@@ -63,4 +64,4 @@ Credentials:
 username: sa  
 password: sa
 
-They are defined here: [GenerateProfiles](acmeflix-app/src/main/resources/application.yml)  
+They are defined here: [application.yml](acmeflix-app/src/main/resources/application.yml)  
