@@ -8,8 +8,8 @@ import com.acmeflix.domain.enumeration.Category;
 import com.acmeflix.repository.ProfileRepository;
 import com.acmeflix.transfer.*;
 import com.acmeflix.transfer.resource.*;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+
+
 import org.hibernate.Hibernate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Service
-@RequiredArgsConstructor
+
 @Transactional
 public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
         implements ProfileService {
@@ -28,6 +28,13 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
     private final ProfileRepository profileRepository;
     private final MovieService movieService;
     private final TvShowService tvShowService;
+
+    public ProfileServiceImplementation(UserService userService, ProfileRepository profileRepository, MovieService movieService, TvShowService tvShowService) {
+        this.userService = userService;
+        this.profileRepository = profileRepository;
+        this.movieService = movieService;
+        this.tvShowService = tvShowService;
+    }
 
     JpaRepository<Profile, Long> getRepository() {
         return profileRepository;
@@ -60,13 +67,19 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
     }
 
     @Override
-    public List<Profile> findByUser(@NonNull User user) {
+    public List<Profile> findByUser(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null");
+        }
         return profileRepository.findByUser(user);
     }
 
     @Override
     @Transactional
-    public List<Profile> findByUserEager(@NonNull User user) {
+    public List<Profile> findByUserEager(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null");
+        }
         var profiles = profileRepository.findByUser(user);
         for (Profile profile : profiles) {
             Hibernate.initialize(profile.getMovieHistory());
@@ -87,39 +100,25 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
 
             List<ProfileResourceWithHistory> userProfiles = new ArrayList<>();
 
-            for (Profile profile : profiles) { //For each profile of each user
+            for (Profile profile : profiles) {
                 List<MovieResourceHistoryResource> movieResources = new ArrayList<>();
                 List<TvShowHistoryResource> tvShowResources = new ArrayList<>();
 
                 var watchedMovies = profile.getMovieHistory();
-                for (Long movie : watchedMovies) { //Get all the watched movies
-                    movieResources.add(MovieResourceHistoryResource.builder()
-                            .movieName(movieService.get(movie).getMovieName())
-                            .id(movie)
-                            .build());
+                for (Long movie : watchedMovies) {
+                    movieResources.add(new MovieResourceHistoryResource(movieService.get(movie).getMovieName(), movie));
                 }
 
                 var watchedShows = profile.getTvShowHistory();
-                for (Long showId : watchedShows) { //Get all the watched tv shows
-                    tvShowResources.add(TvShowHistoryResource.builder()
-                            .tvShowName(tvShowService.get(showId).getTvShowName())
-                            .id(showId)
-                            .build());
+                for (Long showId : watchedShows) {
+                    tvShowResources.add(new TvShowHistoryResource(showId, tvShowService.get(showId).getTvShowName()));
                 }
 
-                userProfiles.add(ProfileResourceWithHistory.builder() //Create the history using all the above
-                        .profileID(profile.getId())
-                        .profileName(profile.getName())
-                        .viewedMinutes(profile.getViewedMinutes())
-                        .movieHistory(movieResources)
-                        .tvHistory(tvShowResources)
-                        .build());
+                ProfileResourceWithHistory profileWithHistory = new ProfileResourceWithHistory(profile.getId(), profile.getName(), profile.getViewedMinutes(), movieResources, tvShowResources);
+                userProfiles.add(profileWithHistory);
             }
 
-            accountHistoryList.add(AccountHistory.builder()
-                    .user(userService.toUserResource(user))
-                    .profiles(userProfiles)
-                    .build());
+            accountHistoryList.add(new AccountHistory(userService.toUserResource(user), userProfiles));
         }
 
         return accountHistoryList;
@@ -210,11 +209,7 @@ public class ProfileServiceImplementation extends BaseServiceImpl<Profile>
         List<ProfileResource> profileResources = new ArrayList<>();
 
         for (Profile profile : profiles) {
-            profileResources.add(ProfileResource.builder()
-                    .profileID(profile.getId())
-                    .viewedMinutes(profile.getViewedMinutes())
-                    .profileName(profile.getName())
-                    .build());
+            profileResources.add(new ProfileResource(profile.getId(), profile.getName(), profile.getViewedMinutes()));
         }
 
         return profileResources;

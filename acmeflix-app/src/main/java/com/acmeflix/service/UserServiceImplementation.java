@@ -5,7 +5,7 @@ import com.acmeflix.domain.User;
 import com.acmeflix.repository.ProfileRepository;
 import com.acmeflix.repository.UserRepository;
 import com.acmeflix.transfer.resource.UserResource;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +15,17 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+
 public class UserServiceImplementation extends BaseServiceImpl<User>
         implements UserService {
 
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
+
+    public UserServiceImplementation(UserRepository userRepository, ProfileRepository profileRepository) {
+        this.userRepository = userRepository;
+        this.profileRepository = profileRepository;
+    }
 
     JpaRepository<User, Long> getRepository() {
         return userRepository;
@@ -62,12 +67,7 @@ public class UserServiceImplementation extends BaseServiceImpl<User>
         List<UserResource> userResources = new ArrayList<>();
 
         for (User user1 : users) {
-            userResources.add(UserResource.builder()
-                    .firstName(user1.getFirstName())
-                    .lastName(user1.getLastName())
-                    .id(user1.getId())
-                    .email(user1.getEmail())
-                    .build());
+            userResources.add(new UserResource(user1.getId(), user1.getEmail(), user1.getFirstName(), user1.getLastName()));
         }
 
         return userResources;
@@ -75,12 +75,7 @@ public class UserServiceImplementation extends BaseServiceImpl<User>
 
     @Override
     public UserResource toUserResource(User user) {
-        return UserResource.builder()
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .id(user.getId())
-                .email(user.getEmail())
-                .build();
+        return new UserResource(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName());
     }
 
     @Override

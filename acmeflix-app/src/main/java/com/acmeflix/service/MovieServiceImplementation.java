@@ -3,7 +3,7 @@ package com.acmeflix.service;
 import com.acmeflix.domain.Movie;
 import com.acmeflix.repository.MovieRepository;
 import com.acmeflix.transfer.resource.MovieResource;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+
 public class MovieServiceImplementation extends BaseServiceImpl<Movie>
         implements MovieService {
 
     private final MovieRepository movieRepository;
+
+    public MovieServiceImplementation(MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
+    }
 
     JpaRepository<Movie, Long> getRepository() {
         return movieRepository;
@@ -51,15 +55,8 @@ public class MovieServiceImplementation extends BaseServiceImpl<Movie>
         List<MovieResource> movieResources = new ArrayList<>();
 
         for (Movie movie1 : movies) {
-            movieResources.add(MovieResource.builder()
-                    .movieName(movie1.getMovieName())
-                    .id(movie1.getId())
-                    .description(movie1.getDescription())
-                    .movieYear(movie1.getMovieYear())
-                    .category(movie1.getCategory())
-                    .rating(movie1.getRating())
-                    .duration(movie1.getDuration())
-                    .build());
+            MovieResource resource = new MovieResource(movie1.getMovieName(), movie1.getDescription(), movie1.getMovieYear(), movie1.getCategory(), movie1.getDuration(), movie1.getId(), movie1.getRating());
+            movieResources.add(resource);
         }
 
         return movieResources;

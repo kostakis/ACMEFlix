@@ -9,7 +9,6 @@ import com.acmeflix.transfer.ApiResponse;
 import com.acmeflix.transfer.resource.AccountHistory;
 import com.acmeflix.transfer.resource.ProfileResource;
 import com.acmeflix.transfer.resource.UserResource;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,44 +16,44 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping(value = "users")
 public class UserController extends BaseController<User> {
 
     private final UserService userService;
     private final ProfileService profileService;
 
+    public UserController(UserService userService, ProfileService profileService) {
+        this.userService = userService;
+        this.profileService = profileService;
+    }
+
     @Override
     BaseService<User, Long> getBaseService() {
         return userService;
     }
 
-    //Print all users
     @GetMapping
     public ResponseEntity<?> findAll() {
         logger.info("GET request users/");
 
         List<UserResource> allUsers = userService.toUserResource(userService.findAll());
 
-        return ResponseEntity.ok(ApiResponse.<List<UserResource>>builder()
-                .data(allUsers)
-                .build());
+        ApiResponse<List<UserResource>> response = new ApiResponse<>();
+        response.setData(allUsers);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<?>> findUserById(@PathVariable Long id) {
         logger.info("GET request users/{}", id);
 
-        User user = (userService.find(id)); //If user not found exception is thrown
+        User user = (userService.find(id));
 
-        return ResponseEntity.ok(ApiResponse.<UserResource>builder()
-                .data(UserResource.builder()
-                        .firstName(user.getFirstName())
-                        .lastName(user.getLastName())
-                        .email(user.getEmail())
-                        .id(user.getId())
-                        .build())
-                .build());
+        UserResource userResource = new UserResource(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName());
+        ApiResponse<UserResource> response = new ApiResponse<>();
+        response.setData(userResource);
+        response.setData(userResource);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}/profiles")
@@ -67,11 +66,10 @@ public class UserController extends BaseController<User> {
 
         List<Profile> allProfiles = profileService.findByUser(user);
 
-        //Bad design should have mapper.....
         List<ProfileResource> profileHoursResources = profileService.toProfileResource(allProfiles);
-        return ResponseEntity.ok(ApiResponse.<List<ProfileResource>>builder()
-                .data(profileHoursResources)
-                .build());
+        ApiResponse<List<ProfileResource>> profileResponse = new ApiResponse<>();
+        profileResponse.setData(profileHoursResources);
+        return ResponseEntity.ok(profileResponse);
     }
 
     @GetMapping("/{id}/profiles/history")
@@ -80,9 +78,9 @@ public class UserController extends BaseController<User> {
 
         List<AccountHistory> allProfilesAllUsers = profileService.mapToAccountHistory(List.of(id));
 
-        return ResponseEntity.ok(ApiResponse.<List<AccountHistory>>builder()
-                .data(allProfilesAllUsers)
-                .build());
+        ApiResponse<List<AccountHistory>> historyResponse = new ApiResponse<>();
+        historyResponse.setData(allProfilesAllUsers);
+        return ResponseEntity.ok(historyResponse);
     }
 
     @GetMapping("allviewhistory")
@@ -91,9 +89,9 @@ public class UserController extends BaseController<User> {
 
         List<AccountHistory> allProfilesAllUsers = profileService.mapToAccountHistory(userService.getAllIds());
 
-        return ResponseEntity.ok(ApiResponse.<List<AccountHistory>>builder()
-                .data(allProfilesAllUsers)
-                .build());
+        ApiResponse<List<AccountHistory>> allHistoryResponse = new ApiResponse<>();
+        allHistoryResponse.setData(allProfilesAllUsers);
+        return ResponseEntity.ok(allHistoryResponse);
     }
 
 
@@ -103,9 +101,9 @@ public class UserController extends BaseController<User> {
 
         User user = userService.findByEmail(email);
 
-        return ResponseEntity.ok(ApiResponse.<User>builder()
-                .data(user)
-                .build());
+        ApiResponse<User> userResponse = new ApiResponse<>();
+        userResponse.setData(user);
+        return ResponseEntity.ok(userResponse);
     }
 
     @DeleteMapping("/{id}")
@@ -114,9 +112,9 @@ public class UserController extends BaseController<User> {
 
         userService.deleteById(id);
 
-        return ResponseEntity.ok(ApiResponse.<String>builder()
-                .data("Deletion of user with id: " + id + " was successfull")
-                .build());
+        ApiResponse<String> deleteResponse = new ApiResponse<>();
+        deleteResponse.setData("Deletion of user with id: " + id + " was successfull");
+        return ResponseEntity.ok(deleteResponse);
     }
 
     @PutMapping(value = "/{id}")

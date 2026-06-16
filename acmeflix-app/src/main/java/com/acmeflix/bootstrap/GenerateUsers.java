@@ -4,7 +4,7 @@ import com.acmeflix.base.AbstractLogComponent;
 import com.acmeflix.domain.User;
 import com.acmeflix.service.ProfileService;
 import com.acmeflix.service.UserService;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
@@ -12,37 +12,27 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Profile("my-dev")
-@RequiredArgsConstructor
-@Order(1) // Before doing anything else we must create the users
+
+@Order(1)
 public class GenerateUsers extends AbstractLogComponent implements CommandLineRunner {
 
     private final UserService userService;
+    private final ProfileService profileService;
+
+    public GenerateUsers(UserService userService, ProfileService profileService) {
+        this.userService = userService;
+        this.profileService = profileService;
+    }
 
     @Override
     public void run(String... args) throws Exception {
         logger.info("Generating users");
 
         var users = userService.createAll(
-                User.builder().email("akiskostakis@gmail.com")
-                        .firstName("Akis")
-                        .lastName("Kostakis")
-                        .password("mypass")
-                        .build(),
-                User.builder().email("johndoe@gmail.com")
-                        .firstName("John")
-                        .lastName("Doe")
-                        .password("mypass")
-                        .build(),
-                User.builder().email("giannispetrakis@gmail.com")
-                        .firstName("Giannis")
-                        .lastName("Petrakis")
-                        .password("mypass")
-                        .build(),
-                User.builder().email("nikospapadakis@gmail.com")
-                        .firstName("Nikos")
-                        .lastName("Papadakis")
-                        .password("mypass")
-                        .build()
+                new User("akiskostakis@gmail.com", "Akis", "Kostakis", "mypass"),
+                new User("johndoe@gmail.com", "John", "Doe", "mypass"),
+                new User("giannispetrakis@gmail.com", "Giannis", "Petrakis", "mypass"),
+                new User("nikospapadakis@gmail.com", "Nikos", "Papadakis", "mypass")
         );
     }
 }

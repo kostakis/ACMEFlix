@@ -6,30 +6,32 @@ import com.acmeflix.service.MovieService;
 import com.acmeflix.service.ProfileService;
 import com.acmeflix.service.TvShowService;
 import com.acmeflix.service.UserService;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Random;
 
 @Component
 @Profile("my-dev")
-@RequiredArgsConstructor
-@Order(4) // Last since we must have users, movies, shows and then create the profiles
+
+@Order(4)
 public class GenerateProfiles extends AbstractLogComponent implements CommandLineRunner {
 
-    @NotNull
     private final ProfileService profileService;
-    @NotNull
     private final UserService userService;
-    @NotNull
     private final MovieService movieService;
-    @NotNull
     private final TvShowService tvShowService;
+
+    public GenerateProfiles(ProfileService profileService, UserService userService, MovieService movieService, TvShowService tvShowService) {
+        this.profileService = profileService;
+        this.userService = userService;
+        this.movieService = movieService;
+        this.tvShowService = tvShowService;
+    }
 
     Random randomGenerator = new Random();
 

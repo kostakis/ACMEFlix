@@ -5,7 +5,7 @@ import com.acmeflix.domain.TvShow;
 import com.acmeflix.domain.TvShowEpisodes;
 import com.acmeflix.domain.enumeration.Category;
 import com.acmeflix.service.TvShowService;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
@@ -15,11 +15,15 @@ import java.util.List;
 
 @Component
 @Profile("my-dev")
-@RequiredArgsConstructor
+
 @Order(2)
 public class GenerateTvShows extends AbstractLogComponent implements CommandLineRunner {
 
     private final TvShowService tvShowService;
+
+    public GenerateTvShows(TvShowService tvShowService) {
+        this.tvShowService = tvShowService;
+    }
 
     @Override
     public void run(String... args) throws Exception {

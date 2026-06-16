@@ -9,7 +9,6 @@ import com.acmeflix.transfer.ApiResponse;
 import com.acmeflix.transfer.BaseWatchedInterface;
 import com.acmeflix.transfer.MovieRatedInterface;
 import com.acmeflix.transfer.TvShowRatedInterface;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +18,16 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("profiles/")
 public class ProfileController extends BaseController<Profile> {
 
     private final ProfileService profileService;
     private final UserService userService;
+
+    public ProfileController(ProfileService profileService, UserService userService) {
+        this.profileService = profileService;
+        this.userService = userService;
+    }
 
     @Override
     BaseService<Profile, Long> getBaseService() {
@@ -37,9 +40,9 @@ public class ProfileController extends BaseController<Profile> {
 
         var allProfiles = profileService.findAllEager();
 
-        return ResponseEntity.ok(ApiResponse.<List<Profile>>builder()
-                .data(allProfiles)
-                .build());
+        ApiResponse<List<Profile>> response = new ApiResponse<>();
+        response.setData(allProfiles);
+        return ResponseEntity.ok(response);
     }
 
 
@@ -48,27 +51,27 @@ public class ProfileController extends BaseController<Profile> {
 
         var allSeriesAndMovies = profileService.findTopSeriesAndMovies(10);
 
-        return ResponseEntity.ok(ApiResponse.<List<BaseWatchedInterface>>builder()
-                .data(allSeriesAndMovies)
-                .build());
+        ApiResponse<List<BaseWatchedInterface>> response = new ApiResponse<>();
+        response.setData(allSeriesAndMovies);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/topRatedMovies")
     public ResponseEntity<ApiResponse<?>> findTopRatedMovies() {
         var allRated = profileService.findTopRatedMovies(10);
 
-        return ResponseEntity.ok(ApiResponse.<List<MovieRatedInterface>>builder()
-                .data(allRated)
-                .build());
+        ApiResponse<List<MovieRatedInterface>> response = new ApiResponse<>();
+        response.setData(allRated);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/topRatedSeries")
     public ResponseEntity<ApiResponse<?>> findTopTenRatedSeries() {
         var allRated = profileService.findTopRatedTvShows(10);
 
-        return ResponseEntity.ok(ApiResponse.<List<TvShowRatedInterface>>builder()
-                .data(allRated)
-                .build());
+        ApiResponse<List<TvShowRatedInterface>> response = new ApiResponse<>();
+        response.setData(allRated);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/topcategories")
@@ -77,8 +80,8 @@ public class ProfileController extends BaseController<Profile> {
         var allSeriesAndMovies = profileService.findTopSeriesAndMovies(10);
         var categories = profileService.findTopCategories(allSeriesAndMovies, 5);
 
-        return ResponseEntity.ok(ApiResponse.<List<Map.Entry<Category, Integer>>>builder()
-                .data(categories)
-                .build());
+        ApiResponse<List<Map.Entry<Category, Integer>>> response = new ApiResponse<>();
+        response.setData(categories);
+        return ResponseEntity.ok(response);
     }
 }

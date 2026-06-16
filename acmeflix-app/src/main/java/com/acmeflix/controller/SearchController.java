@@ -5,7 +5,6 @@ import com.acmeflix.domain.BaseModel;
 import com.acmeflix.service.MovieService;
 import com.acmeflix.service.TvShowService;
 import com.acmeflix.transfer.ApiResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +15,15 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping(value = "search")
 public class SearchController extends AbstractLogComponent {
     private final MovieService movieService;
     private final TvShowService tvShowService;
+
+    public SearchController(MovieService movieService, TvShowService tvShowService) {
+        this.movieService = movieService;
+        this.tvShowService = tvShowService;
+    }
 
     @GetMapping(params = {"name"})
     public ResponseEntity<ApiResponse<?>> findMovieByInitialName(@RequestParam("name") String initialName) {
@@ -32,12 +35,8 @@ public class SearchController extends AbstractLogComponent {
         var tvShowList = tvShowService.findByInitialTvShowName(initialName);
         logger.info("TvShow list is: {}", tvShowList);
 
-        return ResponseEntity.ok(ApiResponse.<List<BaseModel>>builder()
-                .data(Stream.concat(movieList.stream(), tvShowList.stream()).toList())
-                .build());
+        ApiResponse<List<BaseModel>> response = new ApiResponse<>();
+        response.setData(Stream.concat(movieList.stream(), tvShowList.stream()).toList());
+        return ResponseEntity.ok(response);
     }
-
 }
-
-
-

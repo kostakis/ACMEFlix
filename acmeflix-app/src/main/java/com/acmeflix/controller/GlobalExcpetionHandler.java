@@ -23,15 +23,14 @@ public class GlobalExcpetionHandler extends AbstractLogComponent {
         apiError.setMessage(ex.getMessage());
         apiError.setPath(webRequest.getDescription(false));
 
-        return new ResponseEntity(ApiResponse.<String>builder()
-                .apiError(apiError)
-                .build(), HttpStatus.INTERNAL_SERVER_ERROR);
+        ApiResponse<String> response = new ApiResponse<>();
+        response.setApiError(apiError);
+        return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 
     @ExceptionHandler(NoSuchElementException.class)
     ResponseEntity<?> handleNotFoundException(final Exception ex, final WebRequest webRequest) {
-        //ex.printStackTrace();
         logger.error("Exception handleNotFoundException thrown: " + ex.getMessage());
 
         ApiError apiError = new ApiError();
@@ -40,14 +39,13 @@ public class GlobalExcpetionHandler extends AbstractLogComponent {
         apiError.setPath(webRequest.getDescription(false));
 
 
-        return new ResponseEntity(ApiResponse.<String>builder()
-                .apiError(apiError)
-                .build(), HttpStatus.NOT_FOUND);
+        ApiResponse<String> response = new ApiResponse<>();
+        response.setApiError(apiError);
+        return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     ResponseEntity<?> handleNotFoundException(final IllegalArgumentException ex, WebRequest webRequest) {
-        //ex.printStackTrace();
         logger.error("Exception IllegalArgumentException thrown: " + ex.getMessage());
 
         ApiError apiError = new ApiError();
@@ -55,8 +53,8 @@ public class GlobalExcpetionHandler extends AbstractLogComponent {
         apiError.setMessage(ex.getMessage());
         apiError.setPath(webRequest.getDescription(false));
 
-        return new ResponseEntity(ApiResponse.<String>builder()
-                .apiError(apiError)
-                .build(), HttpStatus.BAD_REQUEST);
+        ApiResponse<String> response = new ApiResponse<>();
+        response.setApiError(apiError);
+        return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
     }
 }
